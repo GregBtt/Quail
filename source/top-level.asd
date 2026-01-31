@@ -15,27 +15,32 @@
 ;;;----------------------------------------------------------------------------
 
 (asdf:defsystem "top-level"
-    :default-component-class cl-source-file.lsp
-  :components (#-:sbcl-linux(:file "top-level/quail-top-level-read")
-               ;#+:sbcl-linux(:file  "top-level/top-level-sblx")
-               #+:aclpc-linux(:file "top-level/top-level-pc")
-               (:file "top-level/infix") 
-               #-:sbcl-linux(:file "top-level/top-level")
+    :serial t
+    :components 
+    ((:module "top-level"
+        :pathname "top-level/"
+        :components
+        ((:quail-source-file "quail-top-level-read" :if-feature (:not :sbcl-linux))
+               ;(:quail-source-file  "top-level-sblx")
+               (:quail-source-file "top-level-pc" :if-feature :aclpc-linux)
+               (:quail-source-file "infix") 
+               (:quail-source-file "top-level" :if-feature (:not :sbcl-linux))
                ;; the following allows execution of forms from within an edit
                ;; window *when* the Quail top-level loop is running.
-               #+:sbcl-linux(:file "top-level/editor-sblx")
-               #+:ccl (:file "top-level/editor-mcl")
-               #+:aclpc-linux(:file "top-level/editor-pc")
-               #-:sbcl-linux(:file "top-level/quail-menu")
-               #-:sbcl-linux(:file "top-level/quail-plot-menu")
-               #+:sbcl-linux(:file "top-level/quail-menubar-sblx")
-               #+:sbcl-linux(:file "top-level/quail-menu-sblx") ;07NOV2024
-               #+:sbcl-linux(:file "top-level/plots-menu-sblx") ;07NOV2024
-               #+:sbcl-linux(:file "top-level/canvas-menu-sblx") ;07NOV2024
-               #+:sbcl-linux(:file "top-level/quail-plots-menus-sblx") ;07NOV2024
-               #+:sbcl-linux(:file "top-level/quail-plots-canvas-menus-sblx") ;07NOV2024
-               #+:sbcl-linux(:file "top-level/change-menu-bar-sblx") ;07NOV2024
-               ;#+:sbcl-linux(:file "top-level/quail-menubar-sblx")
-               #+:aclpc-linux(:file "top-level/quail-menubar-pc")  
+               (:quail-source-file "editor-sblx" :if-feature :sbcl-linux)
+               (:quail-source-file "editor-mcl" :if-feature :ccl-1.11)
+               (:quail-source-file "editor-pc" :if-feature :aclpc-linux)
+               (:quail-source-file "quail-menu" :if-feature (:not :sbcl-linux))
+               (:quail-source-file "quail-plot-menu" :if-feature (:not :sbcl-linux))
+               (:quail-source-file "quail-menubar-sblx" :if-feature :sbcl-linux)
+               (:quail-source-file "quail-menu-sblx" :if-feature :sbcl-linux) ;07NOV2024
+               (:quail-source-file "plots-menu-sblx" :if-feature :sbcl-linux) ;07NOV2024
+               (:quail-source-file "canvas-menu-sblx" :if-feature :sbcl-linux) ;07NOV2024
+               (:quail-source-file "quail-plots-menus-sblx" :if-feature :sbcl-linux) ;07NOV2024
+               (:quail-source-file "quail-plots-canvas-menus-sblx" :if-feature :sbcl-linux) ;07NOV2024
+               (:quail-source-file "change-menu-bar-sblx" :if-feature :sbcl-linux) ;07NOV2024
+               ;(:quail-source-file "quail-menubar-sblx")
+               (:quail-source-file "quail-menubar-pc" :if-feature :aclpc-linux)  
                ))
+    ))
 
