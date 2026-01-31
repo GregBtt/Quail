@@ -18,6 +18,6 @@
 ;;;----------------------------------------------------------------------------
 
 (asdf:defsystem "quail-user"
-    :default-component-class cl-source-file.lsp
-    :components ((:file "quail-user-package")
-    ))
+    :serial t
+        :components ((:quail-source-file "quail-user-package")
+            ))
