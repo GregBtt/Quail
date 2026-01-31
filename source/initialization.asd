@@ -15,19 +15,23 @@
 ;;;----------------------------------------------------------------------------
 
 (asdf:defsystem "initialization"
-    :default-component-class cl-source-file.lsp
-  :components ((:file "initialization/update-special-vars") ;; contains vw:
-               ;(:file "initialization/synonyms") ;; 17NOV2024 contents moved to quail-kernel/basic/synonym.lsp
+    :serial t
+    :components
+    ((:module "initialization"
+        :pathname "initialization/"
+  :components ((:quail-source-file "update-special-vars") ;; contains vw:
+               ;(:quail-source-file "synonyms") ;; 17NOV2024 contents moved to quail-kernel/basic/synonym.lsp
                ;; no longer supported
-               ;; (:file (add-system-extension "ffenv-std"))
-               (:file "initialization/load-quail-init")
+               ;; (:quail-source-file (add-system-extension "ffenv-std"))
+               (:quail-source-file "load-quail-init")
                ;; a temporary way to deal with this ...
-               (:file "initialization/release-path")
-               (:file "initialization/release") ;<< contains vw:
-               (:file "initialization/restore-sblx")
-               (:file "initialization/restored-lisp-functions") ;<< some undefined functions invoked
-               (:file "initialization/export-syms-from-quail") ;<< contains wb:
-               (:file "initialization/views-init") ;<< contains vw:
-               (:file "initialization/redefine-quail-io") ;<< contains wb:
+               (:quail-source-file "release-path")
+               (:quail-source-file "release") ;<< contains vw:
+               (:quail-source-file "restore-sblx")
+               (:quail-source-file "restored-lisp-functions") ;<< some undefined functions invoked
+               (:quail-source-file "export-syms-from-quail") ;<< contains wb:
+               (:quail-source-file "views-init") ;<< contains vw:
+               (:quail-source-file "redefine-quail-io") ;<< contains wb:
                ))
+    ))
           
