@@ -13,54 +13,61 @@
 ;;;
 ;;;
 ;;;--------------------------------------------------------------------------------
-        
+
+
 (asdf:defsystem "probability"
-    :default-component-class cl-source-file.lsp
-   :components
-   ((:module "probability/generators"
-             :components
-             ((:file "random")
-              (:file "system")
-              (:file "congruential")
-              (:file "default")
+    :serial t
+    :components
+    ((:module "probability"
+        :pathname "probability/"
+        :components
+        ((:module "generators"
+            :pathname "generators/"
+            :components
+            ((:quail-source-file "random")
+              (:quail-source-file "system")
+              (:quail-source-file "congruential")
+              (:quail-source-file "default")
               ))
-    
-    (:module "probability/distributions"
-             :components
-             ((:file "prob-measure")
-              (:file "findlimits")
-              (:file "discrete-dist")
-              (:file "bisection")
-              (:file "continuous-dist")
-              (:file "location-scale")
-              (:file "beta")
-              (:file "uniform")
-              (:file "prob-methods")
-              (:file "gamma")
-              (:file "exponential")
-              (:file "chi-squared")
-              (:file "student")
-              (:file "gaussian")
-              (:file "cauchy")
-              (:file "binomial")
-              (:file "bernoulli")
-              (:file "negative-binomial")
-              (:file "geometric")
-              (:file "hypergeometric") ;;; <---- fix simultaneous setting
-              (:file "discrete-uniform")
-              (:file "poisson")
-              (:file "finite-mixture")
-              (:file "data-prob")
-              (:file "pareto")
-              (:file "weibull")
-              (:file "F-dist")
-              (:file "K-dist")
-              (:file "init-dist")
+        
+        (:module "distributions"
+            :pathname "distributions/"
+            :components
+            ((:quail-source-file "prob-measure")
+              (:quail-source-file "findlimits")
+              (:quail-source-file "discrete-dist")
+              (:quail-source-file "bisection")
+              (:quail-source-file "continuous-dist")
+              (:quail-source-file "location-scale")
+              (:quail-source-file "beta")
+              (:quail-source-file "uniform")
+              (:quail-source-file "prob-methods")
+              (:quail-source-file "gamma")
+              (:quail-source-file "exponential")
+              (:quail-source-file "chi-squared")
+              (:quail-source-file "student")
+              (:quail-source-file "gaussian")
+              (:quail-source-file "cauchy")
+              (:quail-source-file "binomial")
+              (:quail-source-file "bernoulli")
+              (:quail-source-file "negative-binomial")
+              (:quail-source-file "geometric")
+              (:quail-source-file "hypergeometric") ;;; <---- fix simultaneous setting
+              (:quail-source-file "discrete-uniform")
+              (:quail-source-file "poisson")
+              (:quail-source-file "finite-mixture")
+              (:quail-source-file "data-prob")
+              (:quail-source-file "pareto")
+              (:quail-source-file "weibull")
+              (:quail-source-file "F-dist")
+              (:quail-source-file "K-dist")
+              (:quail-source-file "init-dist")
               ))
-    (:module "probability/random"
-             :components
-             ((:file "permute")))
-    
-    
-    )
-    )
+        (:module "random"
+            :pathname "random/"
+            :components
+            ((:quail-source-file "permute")))
+        
+        
+        ))
+    ))
