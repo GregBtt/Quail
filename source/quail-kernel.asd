@@ -12,124 +12,139 @@
 ;;;     Greg Anglin 1989, 1990, 1991.
 ;;;     R.W. Oldford 1989 +
 ;;;     Bob White
-;;;     Greg Bennett 2017
+;;;     Greg Bennett 2017, 2026
 ;;;
 ;;;
 ;;;----------------------------------------------------------------------------
 
-
 (asdf:defsystem "quail-kernel"
-    :default-component-class cl-source-file.lsp
-    :components ((:file "quail-kernel/quail-kernel-package")
-                 #+:sbcl-linux(:file  "quail-kernel/quail-kernel-system-sblx")
-                 #+:ccl-1.11(:file  "quail-kernel/quail-kernel-system-ccl")
-                 #+:aclpc-linux(:file "quail-kernel/quail-kernel-system-pc")
+  :serial t
+  :components
+  ((:module "quail-kernel"
+    :pathname "quail-kernel/"
+    :components
+    ((:quail-source-file "quail-kernel-package")
 
-               (:module "quail-kernel/mop"
-                        :components (#+:sbcl-linux(:file "mop-sblx")
-                                     #+:ccl.1-11(:file "mop-ccl")
-                                     #+:aclpc-linux(:file "mop-pc")
-                                     (:file "mixin-to-quail")
-                                     #+:sbcl-linux(:file "function-info-sblx")
-                                     #+:ccl-1.11(:file "function-info-ccl")
-                                     #+:aclpc-linux(:file "function-info-pc")
-                                     ))
+     (:quail-source-file "quail-kernel-system-sblx" :if-feature :sbcl-linux)
+     (:quail-source-file "quail-kernel-system-ccl"  :if-feature :ccl-1.11)
+     (:quail-source-file "quail-kernel-system-pc"   :if-feature :aclpc-linux)
 
-               (:module "quail-kernel/basic"
-                        :components ((:file "defmethod-multi")
-                                     (:file "special-vars")
-                                     (:file "synonym")
-                                     (:file "seq")
-                                     (:file "tree")
-                                     (:file "search-tree")
-                                     (:file "utility"
-                                            :depends-on ("special-vars"))
-                                     #+:sbcl-linux(:file "utility-sblx")
-                                     #+:ccl-1.11(:file "utility-ccl")
-                                     #+:aclpc-linux(:file "utility-pc")
-                                     (:file "seq-utilities")
-                                     (:file "symbols")
-                                     (:file "quail-object")
-                                     (:file "proto-mixin")
-                                     (:file "open-mixin")
-                                     (:file "return-class")
-                                     (:file "make-result")
-                                     #+:sbcl-linux(:file "defconstant")))
-               (:module "quail-kernel/io"
-                        :components ((:file "quail-io")
-                                     (:file "quail-file")
-                                     (:file "scan")
-                                     (:file "slots")
-                                     #+:sbcl-linux(:file "save-sblx")
-                                     #+:ccl-1.11(:file "save-ccl")
-                                     #+:aclpc-linux(:file "save-pc")
-                                     (:file "restore")
-                                     ;; (:file (add-system-extension "restore"))
+     (:module "mop"
+      :pathname "mop/"              ; <- note: relative to quail-kernel/
+      :components
+      ((:quail-source-file "mop-sblx" :if-feature :sbcl-linux)
+       (:quail-source-file "mop-ccl"  :if-feature :ccl-1.11)
+       (:quail-source-file "mop-pc"   :if-feature :aclpc-linux)
+
+       (:quail-source-file "mixin-to-quail")
+
+       (:quail-source-file "function-info-sblx" :if-feature :sbcl-linux)
+       (:quail-source-file "function-info-ccl"  :if-feature :ccl-1.11)
+       (:quail-source-file "function-info-pc"   :if-feature :aclpc-linux)))
+
+      (:module "basic"
+         :pathname "basic/"
+         :components ((:quail-source-file "defmethod-multi")
+           (:quail-source-file "special-vars")
+           (:quail-source-file "synonym")
+           (:quail-source-file "seq")
+           (:quail-source-file "tree")
+           (:quail-source-file "search-tree")
+           (:quail-source-file "utility"
+             :depends-on ("special-vars"))
+           (:quail-source-file "utility-sblx" :if-feature :sbcl-linux)
+           (:quail-source-file "utility-ccl" :if-feature :ccl-1.11)
+           (:quail-source-file "utility-pc" :if-feature :aclpc-linux)
+           (:quail-source-file "seq-utilities")
+           (:quail-source-file "symbols")
+           (:quail-source-file "quail-object")
+           (:quail-source-file "proto-mixin")
+           (:quail-source-file "open-mixin")
+           (:quail-source-file "return-class")
+           (:quail-source-file "make-result")
+           (:quail-source-file "defconstant" :if-feature :sbcl-linux)))
+
+      (:module "io"
+         :pathname "io/"
+         :components ((:quail-source-file "quail-io")
+           (:quail-source-file "quail-file")
+           (:quail-source-file "scan")
+           (:quail-source-file "slots")
+           (:quail-source-file "save-sblx" :if-feature :sbcl-linux)
+           (:quail-source-file "save-ccl" :if-feature :ccl-1.11)
+           (:quail-source-file "save-pc" :if-feature :aclpc-linux)
+           (:quail-source-file "restore")
+           ;; (:file (add-system-extension "restore"))
                                      )
-                         :depends-on ("quail-kernel/basic")
-                        )
+         ;:depends-on ("quail-kernel/basic")
+         )
 
-               (:module "quail-kernel/ref"
-                        :components ((:file "ref-object")
-                                     (:file "eref")
-                                     (:file "ref")
-                                     (:file "indices")
-                                     (:file "ref-if")
-                                     (:file "ref-eq")
-                                     (:file "setf-ref")
-                                     (:file "sel")
-                                     (:file "with-ref")
-                                     (:file "number-of-elements")
-                                     (:file "number-of-slices")
-                                     (:file "subscript-utility")
-                                     (:file "row-major-ops")
-                                     (:file "column-major-ops")
-                                     ;; this wasn't doing anything anywhere ... dga 94 03
-                                     ;; (:file "ref-behavior")
+      (:module "ref"
+         :pathname "ref/"
+         :components ((:quail-source-file "ref-object")
+           (:quail-source-file "eref")
+           (:quail-source-file "ref")
+           (:quail-source-file "indices")
+           (:quail-source-file "ref-if")
+           (:quail-source-file "ref-eq")
+           (:quail-source-file "setf-ref")
+           (:quail-source-file "sel")
+           (:quail-source-file "with-ref")
+           (:quail-source-file "number-of-elements")
+           (:quail-source-file "number-of-slices")
+           (:quail-source-file "subscript-utility")
+           (:quail-source-file "row-major-ops")
+           (:quail-source-file "column-major-ops")
+           ;; this wasn't doing anything anywhere ... dga 94 03
+         ;; (:file "ref-behavior")
                                      )
-                         :depends-on ("quail-kernel/basic" "quail-kernel/io")
-                        )
-               (:module "quail-kernel/math"
-                        :components (#+(not (or :sbcl-linux :ccl-1.11))(:file "extended-ops")
-                                     #+:sbcl-linux(:file "extended-ops-sblx")
-                                     #+:ccl-1.11(:file "extended-ops-ccl")
-                                     #+:aclpc-linux(:file "extended-ops-pc")
-                                     (:file "matrix-multiply")) 
-                         :depends-on ("quail-kernel/basic" "quail-kernel/io" "quail-kernel/ref")
-                        )
-               (:module "quail-kernel/array"
-                        :components ((:file "map-element")
-                                     (:file "map-slices")
-                                     (:file "array")
-                                     (:file "ref-array")
-                                     (:file "mk-array")
-                                     (:file "copy-dispatch")
-                                     (:file "num-array")
-                                     (:file "ones-array")
-                                     (:file "matrix")
-                                     (:file "file-matrix")
-                                     (:file "collapse")
-                                     (:file "tp")
-                                     (:file "glue")
-                                     (:file "slice")
-                                     (:file "sort-object"
-                                            :depends-on ("slice"))
-                                     (:file "sort")
-                                     (:file "sort-position"
-                                            :depends-on ("slice"))
-                                     (:file "ranks")
-                                     (:file "order")
-                                     (:file "remove-slices")
-                                     (:file "find-slices")
-                                     (:file "count-slices"
-                                            :depends-on ("slice"))
-                                     (:file "substitute-slices")
-                                     (:file "replace-slices")
-                                     (:file "slice-positions")
-                                     (:file "reduce-slices")
-                                     )
-                         :depends-on ("quail-kernel/basic" "quail-kernel/io" "quail-kernel/ref" "quail-kernel/math")
-                        ))
+         ;:depends-on ("quail-kernel/basic" "quail-kernel/io")
+         )
 
-)
+      (:module "math"
+         :pathname "math/"
+         :components ((:quail-source-file "extended-ops" :if-feature (:not (:or :sbcl-linux :ccl-1.11)))
+           (:quail-source-file "extended-ops-sblx" :if-feature :sbcl-linux)
+           (:quail-source-file "extended-ops-ccl" :if-feature :ccl-1.11)
+           (:quail-source-file "extended-ops-pc" :if-feature :aclpc-linux)
+           (:quail-source-file "matrix-multiply")) 
+         ;:depends-on ("quail-kernel/basic" "quail-kernel/io" "quail-kernel/ref")
+         )
+
+      (:module "array"
+         :pathname "array/"
+         :components ((:quail-source-file "map-element")
+           (:quail-source-file "map-slices")
+           (:quail-source-file "array")
+           (:quail-source-file "ref-array")
+           (:quail-source-file "mk-array")
+           (:quail-source-file "copy-dispatch")
+           (:quail-source-file "num-array")
+           (:quail-source-file "ones-array")
+           (:quail-source-file "matrix")
+           (:quail-source-file "file-matrix")
+           (:quail-source-file "collapse")
+           (:quail-source-file "tp")
+           (:quail-source-file "glue")
+           (:quail-source-file "slice")
+           (:quail-source-file "sort-object"
+             :depends-on ("slice"))
+           (:quail-source-file "sort")
+           (:quail-source-file "sort-position"
+             :depends-on ("slice"))
+           (:quail-source-file "ranks")
+           (:quail-source-file "order")
+           (:quail-source-file "remove-slices")
+           (:quail-source-file "find-slices")
+           (:quail-source-file "count-slices"
+             :depends-on ("slice"))
+           (:quail-source-file "substitute-slices")
+           (:quail-source-file "replace-slices")
+           (:quail-source-file "slice-positions")
+           (:quail-source-file "reduce-slices")
+           )
+         ;:depends-on ("quail-kernel/basic" "quail-kernel/io" "quail-kernel/ref" "quail-kernel/math")
+         ))
+
+)))
 
