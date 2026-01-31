@@ -16,61 +16,69 @@
 ;;;--------------------------------------------------------------------------------
 
 (asdf:defsystem "statistics"
-    :default-component-class cl-source-file.lsp
-   :components
-   ((:module "statistics/basic-statistics"
-             :components
-             ((:file "summary-statistics")
-              (:file "sweep")))
-    
-    (:module "statistics/stat-graphics"
-             :components
-             ((:file "projection-trace")
-              (:file "qq-plot")
-              ;; --> split between Views and Stat-Sessions (:file "display")
-              (:file "display-probability")
-              (:file "stem")
-              (:file "hue-light-view")
-              (:file "imagel")
-              (:file "image")
+    :serial t
+    :components
+    ((:module "statistics"
+        :pathname "statistics/"
+        :components
+        ((:module "basic-statistics"
+            :pathname "basic-statistics/"
+            :components
+            ((:quail-source-file "summary-statistics")
+              (:quail-source-file "sweep")))
+        
+        (:module "stat-graphics"
+            :pathname "stat-graphics/"
+            :components
+            ((:quail-source-file "projection-trace")
+              (:quail-source-file "qq-plot")
+              ;; --> split between Views and Stat-Sessions (:quail-source-file "display")
+              (:quail-source-file "display-probability")
+              (:quail-source-file "stem")
+              (:quail-source-file "hue-light-view")
+              (:quail-source-file "imagel")
+              (:quail-source-file "image")
               )
-             )
-    
-    (:module "statistics/models"
-             :components ((:file "parse")
-                          (:file "formula-reduce")
-                          (:file "additive-formula-semantics")
-                          (:file "formula-object")
-                          (:file "factor")
-                          (:file "contrasts")
-                          (:file "response-matrix")
-                          (:file "data-object")
-                          (:file "data-frame")
-                          ;;(:file "fn")   ---> gone to Mathematics directory
-                          (:file "link")
-                          (:file "family")
-                          (:file "weight-fn")
-                          (:file "model-object")
-                          (:file "model-frame")
-                          (:file "fit")
-                          (:file "deviance")
-                          (:file "residuals")
-                          (:file "model-matrix")
-                          (:file "gam")
-                          (:file "gamfit-1") ;; temporary name, probably
-                          (:file "glm")
-                          (:file "least-squares-mixin")
-                          (:file "linear-model")
-                          (:file "lsfit")
-                          ;; (:file "models-topic-doc")
-                          (:file "new-terms")
-                          ;;(:file "display") << has wb:
+            )
+        
+        (:module "models"
+            :pathname "models/"
+            :components ((:quail-source-file "parse")
+              (:quail-source-file "formula-reduce")
+              (:quail-source-file "additive-formula-semantics")
+              (:quail-source-file "formula-object")
+              (:quail-source-file "factor")
+              (:quail-source-file "contrasts")
+              (:quail-source-file "response-matrix")
+              (:quail-source-file "data-object")
+              (:quail-source-file "data-frame")
+                          ;;(:quail-source-file "fn")   ---> gone to Mathematics directory
+                          (:quail-source-file "link")
+                          (:quail-source-file "family")
+                          (:quail-source-file "weight-fn")
+                          (:quail-source-file "model-object")
+                          (:quail-source-file "model-frame")
+                          (:quail-source-file "fit")
+                          (:quail-source-file "deviance")
+                          (:quail-source-file "residuals")
+                          (:quail-source-file "model-matrix")
+                          (:quail-source-file "gam")
+                          (:quail-source-file "gamfit-1") ;; temporary name, probably
+                          (:quail-source-file "glm")
+                          (:quail-source-file "least-squares-mixin")
+                          (:quail-source-file "linear-model")
+                          (:quail-source-file "lsfit")
+                          ;; (:quail-source-file "models-topic-doc")
+                          (:quail-source-file "new-terms")
+                          ;;(:quail-source-file "display") << has wb:
                           )
-             )
-     
-    (:module "statistics/stat-sessions"
-             :components
-             ((:file "response-session"))
-             )
-    
+            )
+        
+        (:module "stat-sessions"
+            :pathname "stat-sessions/"
+            :components
+            ((:quail-source-file "response-session"))
+            )
+        
+        ))
     ))
