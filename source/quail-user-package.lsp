@@ -16,7 +16,7 @@
 
 #+:cl-2
 (defpackage "QUAIL-USER" 
-  #+:sbcl-linux (:use "QUAIL" :clim-lisp :clim :clim-extensions)
+  #+:sbcl-linux (:use :clim-lisp :clim :clim-extensions)
   #+:aclpc-linux (:use :common-lisp)
   ;(:use "QUAIL" "COMMON-LISP")
   (:IMPORT-FROM "QUAIL-KERNEL"
@@ -51,9 +51,10 @@
                           "LOGNOR" "LOGANDC1" "LOGANDC2"
                           "LOGORC1""LOGORC2" "LOGNOT" "LOGTEST"
                           "LOGBITP" "ASH" "LOGCOUNT" "INTEGER-LENGTH"
-                          "BOOLE")
+                          "BOOLE"
+                          "INSTALL-QUAIL-MENUBAR")
   (:nicknames "Q-USER" "quail-user"))
 #-:cl-2
-(in-package "QUAIL-USER" 
+(defpackage "QUAIL-USER" 
             :use '("QUAIL" "PCL" "LISP")
             :nicknames '("Q-USER" "quail-user"))
