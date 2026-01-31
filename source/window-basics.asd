@@ -16,255 +16,282 @@
 ;;; THIS IS THE SBCL FILE
 
 (asdf:defsystem "window-basics"
-    :default-component-class cl-source-file.lsp
-  :components
-  ((:file "window-basics/window-basics-package")
-
-   (:module "window-basics/startup"
-            :components
-            ((:file "restore")
-             ;;(:file (wb-add-system-extension "restore"))
-             ;;<-- use quail's restore fns instead
-             (:file "debug"))
-            )
-
-   (:module "window-basics/macros"
-            :components
-            (#+:sbcl-linux(:file "macros-sblx")
-             #+:aclpc-linux(:file "macros-pc")
-             #+:sbcl-linux(:file "operations-sblx")
-             #+:aclpc-linux(:file "operations-pc")
-             (:file "operations")
-             (:file "positions")
-             (:file "display-mode"))
-           )
-
-   (:module "window-basics/host"
-            :components
-            ((:file "host-draw-package")
-            #+:sbcl-linux(:file "host-system-sblx")
-             #+:aclpc-linux(:file "host-system-pc")
-             #+:sbcl-linux(:file "host-draw-sblx")
-             #+:aclpc-linux(:file "host-draw-pc")
-             #+:sbcl-linux(:file "scrolling-window-sblx")
-             #+:aclpc-linux(:file "scrolling-window-pc")
-             #+:sbcl-linux(:file "host-menu-canvas-sblx")
-            ;#+:sbcl-linux(:file"test-color-menu") ;; NEW 15OCT2024 to test replacement
-             #+:aclpc-linux(:file "host-menu-canvas-pc")
-             #+:sbcl-linux(:file "host-window-sblx")
-             #+:aclpc-linux(:file "host-window-pc")
-             #+:sbcl-linux(:file "host-fonts-sblx")
-             #+:aclpc-linux(:file "host-fonts-pc")
-          )
-            )
-
-   (:module "window-basics/region"
-            :components
-            ((:file "region")))
-
-   (:module "window-basics/transforms"
-            :components
-            ((:file "list-transforms"))
-             ;;(:file integer-affine-transforms)
-             )
-
-   (:module "window-basics/color"
-            :components
-            (#+:sbcl-linux(:file "color-sblx")
-             #+:aclpc-linux(:file "color-pc")   
-             (:file "color")
-             (:file "color-table")
-             #+:sbcl-linux(:file "color-mixin-sblx")
-             #+:aclpc-linux(:file "color-mixin-pc")
-             )
-            :depends-on ("window-basics/macros")
-            )
-
-   (:module "window-basics/fonts"
-            :components
-            ((:file "font")
-             #+:sbcl-linux(:file "default-fonts-sblx")
-             #+:aclpc-linux(:file "default-fonts-pc")
-             #+:sbcl-linux(:file "font-mixin-sblx")
-             #+:aclpc-linux(:file "font-mixin-pc")
-             )
-            :depends-on ("window-basics/macros")
-            )
-
-   (:module "window-basics/pen"
-            :components
-            ((:file "pen")
-             ;; Following contains only a list of legal pen-ops ... never used.
-             ;; (:file (wb-add-system-extension "pen"))
-             (:file "pen-mixin"))
-            )
-
-   (:module "window-basics/bitmap"
-            :components
-            (        
-            #+:sbcl-linux(:file "bitmap-sblx") ;; stubbed 11MAR2022  gwb
-             #+:aclpc-linux(:file "bitmap-pc")
-             (:file "bitmap") ;; stubbed 11MAR2022  gwb
-   ;          ;#+:sbcl-linux(:file "cursor-sblx")
-   ;          #+:aclpc-linux(:file "cursor-pc")
-             (:file "shades")
-             #+:sbcl-linux(:file "shades-sblx")
-             #+:aclpc-linux(:file "shades-pc")
-   ;          ;(:file "cursor")
-             (:file "patterns")
-             )
-            :depends-on ("window-basics/pen" "window-basics/macros")
-           )
-
-
-   (:module "window-basics/monitor"
+   :serial t
+   :components
+   ((:module "window-basics"
+      :pathname "window-basics/"
       :components
-      (#+:sbcl-linux(:file "screen-sblx")
-             #+:aclpc-linux(:file "screen-pc")
-             (:file "screen")
-             #+:sbcl-linux(:file "device-sblx")
-             #+:aclpc-linux(:file "device-pc")
-             (:file "device")
-   )
-      )
+      ((:quail-source-file "window-basics-package")
 
-   (:module "window-basics/mouse"
+         (:module "startup"
+            :pathname "startup/"
             :components
-            (#+:sbcl-linux(:file "mouse-sblx")
-             #+:aclpc-linux(:file "mouse-pc")
-             (:file "button-default")
-             (:file "canvas-button")
-             (:file "mouse")
-             #+:sbcl-linux(:file "canvas-button-sblx")
-             #+:aclpc-linux(:file "canvas-button-pc"))
-             )
-   
-   (:module "window-basics/menus"
-            :components
-            ((:file "menu-canvas")     
-             #+:sbcl-linux(:file "menu-canvas-sblx") ;does nothing
-             #+:aclpc-linux(:file "menu-canvas-pc")
-             (:file "menu")
-             #+:sbcl-linux(:file "menu-sblx") ;stub version 07MAR2022
-             #+:aclpc-linux(:file "menu-pc")
-             ;#+:sbcl-linux(:file "quail-plots-canvas-menus-sblx") ;NEW 01SEP2024
-             )
-             )
-
-   (:module "window-basics/prompt"
-            :components
-            (#+:sbcl-linux(:file "dialog-items-sblx")
-             #+:aclpc-linux(:file "dialog-items-pc")
-             #+:sbcl-linux(:file "dialog-sblx")
-             #+:aclpc-linux(:file "dialog-pc")
-             #+:sbcl-linux(:file "prompt-sblx")
-             #+:aclpc-linux(:file "prompt-pc")
-             #+:sbcl-linux(:file "pick-one-sblx")
-             #+:aclpc-linux(:file "pick-one-pc")
-             #+:sbcl-linux(:file "check-items-sblx")
-             #+:aclpc-linux(:file "check-items-pc")
-             #+:sbcl-linux(:file "collect-input-sblx")
-             #+:aclpc-linux(:file "collect-input-pc"))
-             )
-
-   (:module "window-basics/redisplay"
-          :components
-            (#+:sbcl-linux(:file "canvas-ops-sblx")
-             #+:aclpc-linux(:file "canvas-ops-pc")
-             (:file "canvas-redisplay")
-             #+:sbcl-linux(:file "canvas-redisplay-sblx") ; 27AUG2021
-             #+:aclpc-linux(:file "canvas-redisplay-pc"))
-             )
-            
-   (:module "window-basics/postscript"
-            :components
-            ((:file "postscript-canvas")
-               (:file "ps-font-sblx") ;30AUG2021
-             ;(:file "ps-font")
-             (:file "ps-file")
-             (:file "ps-draw")
-             (:file "ps-strings")
-             (:file "ps-prompt")
-             (:file "canvas-to-ps"))
-            :depends-on ("window-basics/macros")
+            ((:quail-source-file "restore")
+             ;;(:quail-source-file (wb-add-system-extension "restore"))
+             ;;<-- use quail's restore fns instead
+             (:quail-source-file "debug"))
             )
 
-   
-   (:module "window-basics/canvas"
+         (:module "macros"
+            :pathname "macros/"
             :components
-            ((:file "canvas")
-             #+:sbcl-linux(:file "bw-canvas-sblx")
-             #+:aclpc-linux(:file "bw-canvas-pc")
-             #+:sbcl-linux(:file "color-canvas-sblx")
-             #+:sbcl-linux(:file "color-canvas-ops-sblx") ;;New 28AUG2021
-             #+:aclpc-linux(:file "color-canvas-pc")
-             (:file "make-canvas")
-             (:file "key-event")
-             #+:sbcl-linux(:file "key-event-sblx")
-             #+:aclpc-linux(:file "key-event-pc"))
-           )
-           
+            ((:quail-source-file "macros-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "macros-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "operations-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "operations-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "operations")
+              (:quail-source-file "positions")
+              (:quail-source-file "display-mode"))
+            )
 
-   (:module "window-basics/draw"
+         (:module "host"
+            :pathname "host/"
             :components
-            ((:file "draw")
-             #+:sbcl-linux(:file "draw-sblx")
-             #+:aclpc-linux(:file "draw-pc")
-             #+:sbcl-linux(:file "strings-sblx") ;DONE! 22 November 2019
-             #+:aclpc-linux(:file "strings-pc")
-             (:file "strings")
-             (:file "erase")
+            ((:quail-source-file "host-draw-package")
+              (:quail-source-file "host-system-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "host-system-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "host-draw-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "host-draw-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "scrolling-window-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "scrolling-window-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "host-menu-canvas-sblx" :if-feature :sbcl-linux)
+            ;(:quail-source-file"test-color-menu" :if-feature ) ;; NEW 15OCT2024 to test replacement
+            (:quail-source-file "host-menu-canvas-pc" :if-feature :aclpc-linux)
+            (:quail-source-file "host-window-sblx" :if-feature :sbcl-linux)
+            (:quail-source-file "host-window-pc" :if-feature :aclpc-linux)
+            (:quail-source-file "host-fonts-sblx" :if-feature :sbcl-linux)
+            (:quail-source-file "host-fonts-pc" :if-feature :aclpc-linux)
+            )
+            )
+
+         (:module "region"
+            :pathname "region/"
+            :components
+            ((:quail-source-file "region")))
+
+         (:module "transforms"
+            :pathname "transforms/"
+            :components
+            ((:quail-source-file "list-transforms"))
+             ;;(:quail-source-file integer-affine-transforms)
              )
-            :depends-on ("window-basics/macros" "window-basics/pen" "window-basics/fonts" "window-basics/host"))
-            
 
-   (:module "window-basics/canvas-regions"
+         (:module "color"
+            :pathname "color/"
             :components
-            (;;(:file (wb-add-system-extension "canvas-regions"))
-             (:file "canvas-regions")
-             #+:sbcl-linux(:file "clip-sblx")
-             #+:aclpc-linux(:file "clip-pc")
-             (:file "clip")
-             #+:sbcl-linux(:file "drag-sblx") ;07MAR2022 test
-             #+:aclpc-linux(:file "drag-pc")
+            ((:quail-source-file "color-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "color-pc" :if-feature :aclpc-linux)   
+              (:quail-source-file "color")
+              (:quail-source-file "color-table")
+              (:quail-source-file "color-mixin-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "color-mixin-pc" :if-feature :aclpc-linux)
+              )
+            ;:depends-on ("window-basics/macros")
+            )
+
+         (:module "fonts"
+            :pathname "fonts/"
+            :components
+            ((:quail-source-file "font")
+              (:quail-source-file "default-fonts-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "default-fonts-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "font-mixin-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "font-mixin-pc" :if-feature :aclpc-linux)
+              )
+            ;:depends-on ("window-basics/macros")
+            )
+
+         (:module "pen"
+            :pathname "pen/"
+            :components
+            ((:quail-source-file "pen")
+             ;; Following contains only a list of legal pen-ops ... never used.
+             ;; (:quail-source-file (wb-add-system-extension "pen"))
+             (:quail-source-file "pen-mixin"))
+            )
+
+         (:module "bitmap"
+            :pathname "bitmap/"
+            :components
+            ((:quail-source-file "bitmap-sblx" :if-feature :sbcl-linux) ;; stubbed 11MAR2022  gwb
+               (:quail-source-file "bitmap-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "bitmap") ;; stubbed 11MAR2022  gwb
+   ;          ;(:quail-source-file "cursor-sblx" :if-feature )
+   ;          (:quail-source-file "cursor-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "shades")
+             (:quail-source-file "shades-sblx" :if-feature :sbcl-linux)
+             (:quail-source-file "shades-pc" :if-feature :aclpc-linux)
+   ;          ;(:quail-source-file "cursor")
+             (:quail-source-file "patterns"))
+            ;:depends-on ("window-basics/pen" "window-basics/macros")
+            )
+
+
+         (:module "monitor"
+            :pathname "monitor/"
+            :components
+            ((:quail-source-file "screen-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "screen-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "screen")
+              (:quail-source-file "device-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "device-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "device")
+              )
+            )
+
+         (:module "mouse"
+            :pathname "mouse/"
+            :components
+            ((:quail-source-file "mouse-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "mouse-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "button-default")
+              (:quail-source-file "canvas-button")
+              (:quail-source-file "mouse")
+              (:quail-source-file "canvas-button-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "canvas-button-pc" :if-feature :aclpc-linux))
+            )
+
+         (:module "menus"
+            :pathname "menus/"
+            :components
+            ((:quail-source-file "menu-canvas")     
+             (:quail-source-file "menu-canvas-sblx" :if-feature :sbcl-linux) ;does nothing
+             (:quail-source-file "menu-canvas-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "menu")
+             (:quail-source-file "menu-sblx" :if-feature :sbcl-linux) ;stub version 07MAR2022
+             (:quail-source-file "menu-pc" :if-feature :aclpc-linux)
+             ;(:quail-source-file "quail-plots-canvas-menus-sblx" :if-feature ) ;NEW 01SEP2024
              )
-            :depends-on ("window-basics/macros" "window-basics/pen"))
-           
-   (:module "window-basics/hardcopy"
+            )
+
+         (:module "prompt"
+            :pathname "prompt/"
             :components
-            (#+:sbcl-linux(:file "canvas-export-sblx")
-             #+:aclpc-linux(:file "canvas-export-pc")
-             #+:sbcl-linux(:file "hardcopy-sblx")
-             #+:aclpc-linux(:file "hardcopy-pc"))
+            ((:quail-source-file "dialog-items-sblx" :if-feature :sbcl-linux)
+             (:quail-source-file "dialog-items-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "dialog-sblx" :if-feature :sbcl-linux)
+             (:quail-source-file "dialog-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "prompt-sblx" :if-feature :sbcl-linux)
+             (:quail-source-file "prompt-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "pick-one-sblx" :if-feature :sbcl-linux)
+             (:quail-source-file "pick-one-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "check-items-sblx" :if-feature :sbcl-linux)
+             (:quail-source-file "check-items-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "collect-input-sblx" :if-feature :sbcl-linux)
+             (:quail-source-file "collect-input-pc" :if-feature :aclpc-linux))
+            )
+
+         (:module "redisplay"
+            :pathname "redisplay/"
+            :components
+            ((:quail-source-file "canvas-ops-sblx" :if-feature :sbcl-linux)
+             (:quail-source-file "canvas-ops-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "canvas-redisplay")
+             (:quail-source-file "canvas-redisplay-sblx" :if-feature :sbcl-linux) ; 27AUG2021
+             (:quail-source-file "canvas-redisplay-pc" :if-feature :aclpc-linux))
+            )
+
+         (:module "postscript"
+            :pathname "postscript/"
+            :components
+            ((:quail-source-file "postscript-canvas")
+               (:quail-source-file "ps-font-sblx" :if-feature :sbcl-linux) ;30AUG2021
+             ;(:quail-source-file "ps-font")
+             (:quail-source-file "ps-file")
+             (:quail-source-file "ps-draw")
+             (:quail-source-file "ps-strings")
+             (:quail-source-file "ps-prompt")
+             (:quail-source-file "canvas-to-ps"))
+            ;:depends-on ("window-basics/macros")
+            )
+
+
+         (:module "canvas"
+            :pathname "canvas/"
+            :components
+            ((:quail-source-file "canvas")
+              (:quail-source-file "bw-canvas-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "bw-canvas-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "color-canvas-sblx" :if-feature :sbcl-linux)
+             (:quail-source-file "color-canvas-ops-sblx" :if-feature :sbcl-linux) ;;New 28AUG2021
+             (:quail-source-file "color-canvas-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "make-canvas")
+             (:quail-source-file "key-event")
+             (:quail-source-file "key-event-sblx" :if-feature :sbcl-linux)
+             (:quail-source-file "key-event-pc" :if-feature :aclpc-linux))
+            )
+
+
+         (:module "draw"
+            :pathname "draw/"
+            :components
+            ((:quail-source-file "draw")
+              (:quail-source-file "draw-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "draw-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "strings-sblx" :if-feature :sbcl-linux) ;DONE! 22 November 2019
+             (:quail-source-file "strings-pc" :if-feature :aclpc-linux)
+             (:quail-source-file "strings")
+             (:quail-source-file "erase")
              )
-        
-   (:module "window-basics/fast-graphics"
+            ;:depends-on ("window-basics/macros" "window-basics/pen" "window-basics/fonts" "window-basics/host")
+            )
+
+
+         (:module "canvas-regions"
+            :pathname "canvas-regions/"
             :components
-            (#+:sbcl-linux(:file "point-defs-sblx")
-             #+:aclpc-linux(:file "point-defs-pc")
-             #+:sbcl-linux(:file "points-sblx")
-             #+:aclpc-linux(:file "points-pc")
-             #+:sbcl-linux(:file "symbols-sblx")
-             #+:aclpc-linux(:file "symbols-pc" )
-             #+:sbcl-linux(:file "lines-sblx")
-             #+:aclpc-linux(:file "lines-pc")
-             (:file "rotate")) 
-             :depends-on ("window-basics/macros" "window-basics/pen"))
+            (;;(:quail-source-file (wb-add-system-extension "canvas-regions"))
+              (:quail-source-file "canvas-regions" :if-feature :sbcl-linux)
+              (:quail-source-file "clip-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "clip-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "clip")
+             (:quail-source-file "drag-sblx" :if-feature :sbcl-linux) ;07MAR2022 test
+             (:quail-source-file "drag-pc" :if-feature :aclpc-linux)
+             )
+            ;:depends-on ("window-basics/macros" "window-basics/pen")
+            )
 
-   (:module "window-basics/surface"
+         (:module "hardcopy"
+            :pathname "hardcopy/"
             :components
-            ((:file "surface-rotate")
-             (:file "surface-update")
-             (:file "show-lines")
-             (:file "hide-lines")
-             (:file "surface-fill"))
-          )
+            ((:quail-source-file "canvas-export-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "canvas-export-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "hardcopy-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "hardcopy-pc" :if-feature :aclpc-linux))
+            )
 
-
-   (:module "window-basics/start-windows"
+         (:module "fast-graphics"
+            :pathname "fast-graphics/"
             :components
-            (#+:sbcl-linux(:file "start-windows-sblx")
-             #+:aclpc-linux(:file "start-windows-pc")
-             ))
+            ((:quail-source-file "point-defs-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "point-defs-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "points-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "points-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "symbols-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "symbols-pc"  :if-feature :aclpc-linux)
+              (:quail-source-file "lines-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "lines-pc" :if-feature :aclpc-linux)
+              (:quail-source-file "rotate")) 
+            ;:depends-on ("window-basics/macros" "window-basics/pen")
+            )
 
+         (:module "surface"
+            :pathname "surface/"
+            :components
+            ((:quail-source-file "surface-rotate")
+              (:quail-source-file "surface-update")
+              (:quail-source-file "show-lines")
+              (:quail-source-file "hide-lines")
+              (:quail-source-file "surface-fill"))
+            )
+
+
+         (:module "start-windows"
+            :pathname "start-windows/"
+            :components
+            ((:quail-source-file "start-windows-sblx" :if-feature :sbcl-linux)
+              (:quail-source-file "start-windows-pc" :if-feature :aclpc-linux)
+              ))
+
+         ))
 ))
