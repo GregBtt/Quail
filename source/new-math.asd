@@ -10,13 +10,18 @@
 ;;;
 ;;;  Authors:
 ;;;     M.E.Lewis 1991.
-;;;     G.W.Bennett 2017. 
+;;;     G.W.Bennett 2017. 2026
 ;;;
 ;;;----------------------------------------------------------------------------
 
+
 (asdf:defsystem "new-math"
-    :default-component-class cl-source-file.lsp
-      :components ((:file "new-math/new-math-package")
-               (:file "new-math/new-math")
-               (:file "new-math/num-array-math")
-               (:file "new-math/init-new-math")))
+    :serial t
+      :components 
+      ((:module "new-math"
+        :pathname "new-math/"
+        :components
+      ((:quail-source-file "new-math-package")
+               (:quail-source-file "new-math")
+               (:quail-source-file "num-array-math")
+               (:quail-source-file "init-new-math")))))
