@@ -132,8 +132,8 @@
 ;------------------------------------------
 
 (defmethod pdf-at ((dist discrete-uniform) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (integerp + * / - exp expt sqrt > < = /= )
     (if (integerp x)
       (if (and (>= x (lower-bound-of dist)) (<= x (upper-bound-of dist)))
@@ -146,9 +146,9 @@
 ;------------------------------------------
 
 (defmethod cdf-at ((dist discrete-uniform) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (with-CL-functions (+ * / - exp expt sqrt > < = /= )
     (let ((intx (if (< x 0)
                   (ceiling x)
@@ -167,8 +167,8 @@
 
 (defmethod quantile-at ((dist discrete-uniform) (p number) &key start)
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            )
   (with-CL-functions (+ *  - ceiling)
     (+ (ceiling (* (+ 1 (- (upper-bound-of dist)
