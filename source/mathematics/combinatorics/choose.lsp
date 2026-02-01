@@ -36,23 +36,23 @@
 ;;;
 ;;;------------------------------------------------------------------------------
 
-(proclaim '(sb-ext:maybe-inline choose)) ;24NOV2024
+#+:use-dclm(declaim (sb-ext:maybe-inline choose)) ;15DEC2024
 (defun choose (n k)
   
   "Returns the binomial coefficient nCk or n!/(k! (n-k)!).  ~
-   For small values it returns an integer, otherwise a floating point."
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  For small values it returns an integer, otherwise a floating point."
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline log-n!))
   
   (if (or (not (integerp n)) (minusp n))
-    (quail-error "Argument must be a non-negative integer: ~s" n))
+      (quail-error "Argument must be a non-negative integer: ~s" n))
   
   (if (or (not (integerp k)) (minusp k) (> k n))
-    (error
-     "Second argument, ~s , must be a non-negative integer <= ~s" k n))
+      (error
+        "Second argument, ~s , must be a non-negative integer <= ~s" k n))
   
   (let ((result (exp (- (log-n! n) (log-n! k) (log-n! (- n k))))))
     (if (<= result most-positive-fixnum)
-      (setf result (round result)))
+        (setf result (round result)))
     result))
