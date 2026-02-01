@@ -5,8 +5,8 @@
   (declare (type fixnum n))
   (declare (type fixnum lda))
   ;;(declare (type (simple-array double-float (* *)) a))
-  (prog ((t_ 0.0d0) (s 0.0d0) (k 0) (jm1 0) (j 0))
-         ;(ddot 0.0d0) (ddot-hook 0.0d0)) ; 31JUL2023 
+  (prog ((t_ 0.0d0) (s 0.0d0) (k 0) (jm1 0) (j 0)
+         (ddot 0.0d0) (ddot-hook 0.0d0)) 
     (declare (type fixnum j))
     (declare (type fixnum jm1))
     (declare (type fixnum k))
