@@ -36,11 +36,10 @@
 ;;;
 ;;;-------------------------------------------------------------------------------
 
-#-:sbcl-linux(defconstant +table-of-factorials+
+(defparameter  *table-of-factorials*
   (make-array 33 :initial-element 1))
 
-#+:sbcl-linux(qk::define-constant +table-of-factorials+
-  (make-array 33 :initial-element 1))
+
 
 (defun factorial (n &key
                     (integer-arithmetic? nil)
@@ -60,8 +59,8 @@
    )~
    (:see-also log-gamma log-n! choose)~
    "
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline log-gamma))
   (if (or (not (integerp n)) (minusp n))
     (quail-error "Argument must be a non-negative integer: ~s" n)
@@ -84,26 +83,25 @@
 ;;;-------------------------------------------------------------------------------
 
 
-#-:sbcl-linux(defconstant +table-of-log-factorials+
+(defparameter *table-of-log-factorials*
   (make-array 100 :initial-element -1))
 
-#+:sbcl-linux(qk::define-constant +table-of-log-factorials+
-  (make-array 100 :initial-element -1))
 
-(proclaim '(sb-ext:maybe-inline log-n!)) ;24NOV2024
+
+#+:use-dclm(declaim (sb-ext:maybe-inline log-n!)) ;15DEC2024
 (defun log-n! (n)
   "Returns log(n!) Source: Numerical Recipes. ~
    (:see-also log-gamma n!)"
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline log-gamma))
   (if (or (not (integerp n)) (minusp n))
     (quail-error "Argument must be a non-negative integer: ~s" n))
   
-  (if (< n (length +table-of-log-factorials+))
-    (let ((table-value (aref +table-of-log-factorials+ n)))
+  (if (< n (length *table-of-log-factorials*))
+    (let ((table-value (aref *table-of-log-factorials* n)))
       (if (< table-value 0)
-        (setf (aref +table-of-log-factorials+ n) (log-gamma (+ n 1))))
-      (aref +table-of-log-factorials+ n))
+        (setf (aref *table-of-log-factorials* n) (log-gamma (+ n 1))))
+      (aref *table-of-log-factorials* n))
     (log-gamma (+ n 1))))
 
