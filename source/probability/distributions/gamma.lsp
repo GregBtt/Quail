@@ -100,8 +100,8 @@
       (call-next-method)))
           
 (defmethod pdf-at ((distribution gamma-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (+ * / - exp expt sqrt > < = /=  >= <= abs log)
     (let ((location (eref (location-of distribution) 0))
           (scale (eref (scale-of distribution) 0))
@@ -124,8 +124,9 @@
                         (p number)
                         &key (start NIL))
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
+  )
   (with-CL-functions (+ - * / log exp expt abs < > <= >= =)
     (let (chi-result
           (location (eref (location-of distribution) 0))
@@ -373,8 +374,8 @@
 ;***************************   
 
 (defmethod cdf-at ((distribution gamma-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+            ;         (space 0) (compilation-speed 0))
            (inline incomplete-gamma))
   (let ((location (eref (location-of distribution) 0))
         (scale (eref (scale-of distribution) 0))
@@ -393,8 +394,8 @@
 
 
 (defmethod random-value ((distribution gamma-dist) &optional (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
     (let ((location (eref (location-of distribution) 0))
           (scale (eref (scale-of distribution) 0))
           (shape (eref (shape-of distribution) 0))
