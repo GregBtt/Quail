@@ -126,56 +126,56 @@
 ;;;
 
 (defmethod initialize-instance :after ((distribution beta-dist) &key)
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           (inline log-gamma))
+  #+:use-decl(declare  (inline log-gamma))
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
+                                  (space 0) (compilation-speed 0)))
   (with-CL-functions (+ * / - exp expt sqrt > < =)
-    (let ((a (shape1-of distribution))
-          (b (shape2-of distribution)))
-      (cond
-       ((and (> a 0) (> b 0))
-        (<- (1/beta distribution)
-            ;;; (/ 1.0 (beta a b))
-            (exp (- (log-gamma (+ a b))
-                    (log-gamma a)
-                    (log-gamma b))))
-        (<-  (gamma1-of distribution)
-             (make-instance 'gamma-dist :shape a))
-        (<-  (gamma2-of distribution)
-             (make-instance 'gamma-dist :shape b))
-        )
-       (T 
-        
-        (quail-error "shape1 = ~s and shape2 = ~s must be >0."
-                     a
-                     b))))
-    ))
+                     (let ((a (shape1-of distribution))
+                           (b (shape2-of distribution)))
+                       (cond
+                         ((and (> a 0) (> b 0))
+                          (<- (1/beta distribution)
+                              ;;; (/ 1.0 (beta a b))
+                              (exp (- (log-gamma (+ a b))
+                                      (log-gamma a)
+                                      (log-gamma b))))
+                          (<-  (gamma1-of distribution)
+                              (make-instance 'gamma-dist :shape a))
+                          (<-  (gamma2-of distribution)
+                              (make-instance 'gamma-dist :shape b))
+                          )
+                         (T 
+                           
+                           (quail-error "shape1 = ~s and shape2 = ~s must be >0."
+                                        a
+                                        b))))
+                     ))
 
 
 (defmethod cdf-at ((distribution beta-dist) x)
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           (inline incomplete-beta))
+  #+:use-decl(declare (inline incomplete-beta))
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
+                                  (space 0) (compilation-speed 0)))
   (with-CL-functions (+ * / - exp expt sqrt > < =)
-    (cond ((<= x 0) 0)
-          ((>= x 1) 1)
-          (T (incomplete-beta (shape1-of distribution) (shape2-of distribution) x))))
+                     (cond ((<= x 0) 0)
+                           ((>= x 1) 1)
+                           (T (incomplete-beta (shape1-of distribution) (shape2-of distribution) x))))
   )
 
 ;;; Pdf-at  Calculated Numerically
 ;;;
 
 (defmethod pdf-at ((distribution beta-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
+                                  (space 0) (compilation-speed 0))
+                        )
   (with-CL-functions (+ * / - exp expt sqrt > < =)
-    (cond ((= 1.0 (shape1-of distribution) (shape2-of distribution))
-           1.0)
-          ((or (<= x 0) (>= x 1)) 0)
-          (T (* (1/beta distribution)
-                (expt x (- (shape1-of distribution) 1))
-                (expt (- 1 x) (- (shape2-of distribution) 1)))))))
+                     (cond ((= 1.0 (shape1-of distribution) (shape2-of distribution))
+                            1.0)
+                           ((or (<= x 0) (>= x 1)) 0)
+                           (T (* (1/beta distribution)
+                                 (expt x (- (shape1-of distribution) 1))
+                                 (expt (- 1 x) (- (shape2-of distribution) 1)))))))
 ;;;
 ;;; Random-Value:  We all know that Gamma(shape1)/(Gamma(shape2)+Gamma(shape1))
 ;;; is distributed Beta(shape1,scale)... Soo Thats how we calculate are random values
@@ -185,70 +185,70 @@
 ;;;
 
 (defmethod random-value ((distribution beta-dist) &optional (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           (inline incomplete-gamma))
+  #+:use-decl(declare (inline incomplete-gamma))
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
+                                  (space 0) (compilation-speed 0)))
   (with-CL-functions (+ * / - exp expt sqrt > < = /=)
-    (let ((g1 (gamma1-of distribution))
-          (g2 (gamma2-of distribution)))
-      (if (> n 1)
-        (array
-         (loop for i from 1 to n
-               collect
-               (let ((u (random-value g1))
-                     (v (random-value g2)))
-                 (/ u (+ u v)))))
-        (let ((u (random-value g1))
-              (v (random-value g2)))
-          (/ u (+ u v)))
-        )
-      )
-    ))
+                     (let ((g1 (gamma1-of distribution))
+                           (g2 (gamma2-of distribution)))
+                       (if (> n 1)
+                           (array
+                             (loop for i from 1 to n
+                                   collect
+                                   (let ((u (random-value g1))
+                                         (v (random-value g2)))
+                                     (/ u (+ u v)))))
+                           (let ((u (random-value g1))
+                                 (v (random-value g2)))
+                             (/ u (+ u v)))
+                           )
+                       )
+                     ))
 
 
 (defmethod quantile-at ((distribution beta-dist) (p number) &key (start NIL))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           (inline illinois))
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
+                                  (space 0) (compilation-speed 0)))
+  #+:use-decl(declare (inline illinois))
   (with-CL-functions (+ * / - exp expt sqrt > < = /=)
-    (let ((alpha (shape1-of distribution))
-          (beta (shape2-of distribution))
-          (step (/ (- (upper-bound-of distribution)
-                      (lower-bound-of distribution))
-                   10.0))
-          bracket-point)
-      (unless (numberp start)
-        (let* ((approx-normal (quantile-gaussian p))
-               (temp1 (/ 1.0 9.0 beta))
-               (temp2 (+ 1.0 (- temp1) (* approx-normal (sqrt temp1))))
-               (approx-chi (* 2.0 beta (expt temp2 3)))
-               (temp3 (+ (* 4.0 alpha) (* 2.0 beta) -2.0)))
-          (cond
-           ((minusp approx-chi)
-            (setf start (- 1.0
-                           (expt (* beta (- 1.0 p)
-                                    (beta alpha beta))
-                                 (/ 1.0 beta)))))
-           ((<= temp3 approx-chi)
-            (setf start (expt (* alpha p (beta alpha beta))
-                              (/ 1.0 beta))))
-           (T (setf start (/ (- temp3 approx-chi) (+ temp3 approx-chi)))))))
-      (flet ((G-fun (x) (- (cdf-at distribution x) p)))
-        (cond
-         ((minusp (G-fun start))
-          (setf bracket-point (+ start step))
-          (loop for i from 0.0 by step
-                until (plusp (G-fun bracket-point))
-                do (incf bracket-point step))
-          (illinois #'G-fun start bracket-point))
-         ((plusp (G-fun start))
-          (setf bracket-point (- start step))
-          (loop for i from 0.0 by step
-                until (minusp (G-fun bracket-point))
-                do (decf bracket-point step))
-          (illinois #'G-fun bracket-point start))
-         (T start))
-        ))))
+                     (let ((alpha (shape1-of distribution))
+                           (beta (shape2-of distribution))
+                           (step (/ (- (upper-bound-of distribution)
+                                       (lower-bound-of distribution))
+                                    10.0))
+                           bracket-point)
+                       (unless (numberp start)
+                         (let* ((approx-normal (quantile-gaussian p))
+                                (temp1 (/ 1.0 9.0 beta))
+                                (temp2 (+ 1.0 (- temp1) (* approx-normal (sqrt temp1))))
+                                (approx-chi (* 2.0 beta (expt temp2 3)))
+                                (temp3 (+ (* 4.0 alpha) (* 2.0 beta) -2.0)))
+                           (cond
+                             ((minusp approx-chi)
+                              (setf start (- 1.0
+                                             (expt (* beta (- 1.0 p)
+                                                      (beta alpha beta))
+                                                   (/ 1.0 beta)))))
+                             ((<= temp3 approx-chi)
+                              (setf start (expt (* alpha p (beta alpha beta))
+                                                (/ 1.0 beta))))
+                             (T (setf start (/ (- temp3 approx-chi) (+ temp3 approx-chi)))))))
+                       (flet ((G-fun (x) (- (cdf-at distribution x) p)))
+                             (cond
+                               ((minusp (G-fun start))
+                                (setf bracket-point (+ start step))
+                                (loop for i from 0.0 by step
+                                      until (plusp (G-fun bracket-point))
+                                      do (incf bracket-point step))
+                                (illinois #'G-fun start bracket-point))
+                               ((plusp (G-fun start))
+                                (setf bracket-point (- start step))
+                                (loop for i from 0.0 by step
+                                      until (minusp (G-fun bracket-point))
+                                      do (decf bracket-point step))
+                                (illinois #'G-fun bracket-point start))
+                               (T start))
+                             ))))
             
 
 
@@ -266,7 +266,7 @@
    (:key ~
    (:arg a 1  The first shape parameter of the beta-dist distribution.) ~
    (:arg b 1  The second shape parameter of the beta-dist distribution.))"
-  (declare (special *beta-dist*))
+  #+:use-decl(declare (special *beta-dist*))
   (let ((saved-a (shape1-of *beta-dist*))
         (saved-b (shape2-of *beta-dist*))
         result)
@@ -286,7 +286,7 @@
    (:key ~
    (:arg a 1  The first shape parameter of the beta-dist distribution.) ~
    (:arg b 1  The second shape parameter of the beta-dist distribution.))"
-  (declare (special *beta-dist*))
+  #+:use-decl(declare (special *beta-dist*))
   (let ((saved-a (shape1-of *beta-dist*))
         (saved-b (shape2-of *beta-dist*))
         result)
@@ -307,7 +307,7 @@
    (:arg a 1  The first shape parameter of the beta-dist distribution.) ~
    (:arg b 1  The second shape parameter of the beta-dist distribution.))
    (:returns A vector of n pseudo-random values.)"
-  (declare (special *beta-dist*))
+  #+:use-decl(declare (special *beta-dist*))
   (let ((saved-a (shape1-of *beta-dist*))
         (saved-b (shape2-of *beta-dist*))
         result)
@@ -328,7 +328,7 @@
    (:key ~
    (:arg a 1  The first shape parameter of the beta-dist distribution.) ~
    (:arg b 1  The second shape parameter of the beta-dist distribution.)) "
-  (declare (special *beta-dist*))
+  #+:use-decl(declare (special *beta-dist*))
   (let ((saved-a (shape1-of *beta-dist*))
         (saved-b (shape2-of *beta-dist*))
         result)
