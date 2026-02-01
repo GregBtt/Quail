@@ -257,8 +257,8 @@
                  orientation surface-view)))
 
 (defun standardize-surface-data (surface-view)
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (let*
     ((s (surface-of surface-view))
      (x (x-grid-of s))
