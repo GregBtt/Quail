@@ -330,7 +330,7 @@
                           (qrs qr-solution))
   "Sets the value of the qrd slot. If it is different from the ~
    old value (not EQ), then the coefficients are recalculated."
-  (declare (ignore keyword-args))
+  ;(declare (ignore keyword-args)) ;14DEC2024
   (setf (slot-value qrs 'qrd) new-value)
   (solve qrs NIL)
   new-value)
