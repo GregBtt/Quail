@@ -50,8 +50,8 @@
 ;; return quantile-at value
 
 (defmethod quantile-at ((cont continuous-dist) (p number) &key (start 0.5))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline newton illinois))
   (with-CL-functions (+ * / -)
     (if (and (> (lower-bound-of cont) -INFINITY)
