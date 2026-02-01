@@ -23,9 +23,10 @@
 (eval-when (:compile-toplevel :load-toplevel :execute) (export '()))
 
 (defun spin-surface-x (a cos-theta sin-theta &optional old-a)
-  (declare (optimize (speed 3) (safety 0)
+  #+:use-decl(declare (inline CL:+ CL:* CL:- aref))
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0))
-           (inline CL:+ CL:* CL:- aref))
+          )
   (unless old-a
     (setf old-a (make-array (list 3) :element-type 'single-float
            :initial-element 0.0)))
@@ -51,9 +52,10 @@
 
 
 (defun spin-surface-y (a cos-theta sin-theta &optional old-a)
-  (declare (optimize (speed 3) (safety 0)
+  #+:use-decl(declare (inline CL:+ CL:* CL:- aref))
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0))
-           (inline CL:+ CL:* CL:- aref))
+           )
   (unless old-a
     (setf old-a (make-array (list 3) :element-type 'single-float
            :initial-element 0.0)))
@@ -78,9 +80,10 @@
     ))
 
 (defun spin-surface-z (a cos-theta sin-theta  &optional old-a)
-  (declare (optimize (speed 3) (safety 0)
+  #+:use-decl(declare  (inline CL:+ CL:* CL:- aref))
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0))
-           (inline CL:+ CL:* CL:- aref))
+           )
   (unless old-a
     (setf old-a (make-array (list 3) :element-type 'single-float
            :initial-element 0.0)))
@@ -105,9 +108,10 @@
     ))
 
 (defun spin-screen-x (a cos-theta sin-theta &optional old-a)
-  (declare (optimize (speed 3) (safety 0)
+  #+:use-decl(declare (inline CL:+ CL:* CL:- aref))
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0))
-           (inline CL:+ CL:* CL:- aref))
+           )
   (unless old-a
     (setf old-a (make-array (list 3) :element-type 'single-float
            :initial-element 0.0)))
@@ -133,9 +137,10 @@
 
 
 (defun spin-screen-y (a cos-theta sin-theta &optional old-a)
-  (declare (optimize (speed 3) (safety 0)
+  #+:use-decl(declare (inline CL:+ CL:* CL:- aref))
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0))
-           (inline CL:+ CL:* CL:- aref))
+           )
   (unless old-a
     (setf old-a (make-array (list 3) :element-type 'single-float
            :initial-element 0.0)))
@@ -160,9 +165,10 @@
     ))
 
 (defun spin-screen-z (a cos-theta sin-theta &optional old-a)
-  (declare (optimize (speed 3) (safety 0)
+  #+:use-decl(declare (inline CL:+ CL:* CL:- aref))
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0))
-           (inline CL:+ CL:* CL:- aref))
+           )
   (unless old-a
     (setf old-a (make-array (list 3) :element-type 'single-float
            :initial-element 0.0)))
