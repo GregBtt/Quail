@@ -43,8 +43,8 @@
 
 
 (defmethod  pdf-at ((distribution geometric) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (if (integerp x)
     (if (> x 0)
       (* (prob-success distribution)
@@ -53,8 +53,8 @@
     0))
 
 (defmethod (setf number-of-successes) (new-value (dist geometric))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (if (= new-value 1)
     (setf (lower-bound-of dist) new-value)
     (quail-error "Total number of successes for a geometric must be 1, ~
@@ -62,8 +62,8 @@
                  new-value)))
 
 (defmethod  cdf-at ((distribution geometric) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (+ * / -  expt floor >)
     (let ((p (eref (prob-success distribution) 0))
           (integer-x (floor x)))
@@ -72,8 +72,8 @@
         0))))
 
 (defmethod  random-value ((distribution geometric) &optional (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (let ((result
          (ceiling (/  (log (random-uniform :n n)) 
                       (log (- 1 (prob-success distribution)))))))
@@ -83,8 +83,9 @@
                         (q number)
                         &key (start NIL))
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
+           )
   (with-CL-functions (+ * / -  log ceiling <)
     (let ((p (eref (prob-success distribution) 0))
           result)
