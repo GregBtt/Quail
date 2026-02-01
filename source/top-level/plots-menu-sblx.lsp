@@ -75,31 +75,31 @@
    ;;; START P/SV Single variate Sub-menu
 ;;; the commands
 (define-qmbar-command com-hist-PSVSB ()
-	(vw::prompt-plot :dim 1 :plot-fn #'histogram))
+	(vw::prompt-plot :dim 1 :plot-fn #'vw::histogram))
 
 (define-qmbar-command com-barcht-PSVSB ()
-	(vw::prompt-plot :dim 1 :plot-fn #'bar-plot))
+	(vw::prompt-plot :dim 1 :plot-fn #'vw::bar-plot))
 
 (define-qmbar-command com-boxplot-PSVSB ()
-	(vw::prompt-plot :dim 1 :plot-fn #'boxplot))
+	(vw::prompt-plot :dim 1 :plot-fn #'vw::boxplot))
 
 (define-qmbar-command com-dotplot-PSVSB ()
-	(vw::prompt-plot :dim 1 :plot-fn #'dot-plot))
+	(vw::prompt-plot :dim 1 :plot-fn #'vw::dot-plot))
 
 (define-qmbar-command com-plot-PSVSB ()
 	(vw::prompt-plot :dim 1))
 
 (define-qmbar-command com-histby-PSVSB ()
-	(vw::prompt-plot-by :dim 1 :plot-fn 'histogram-view))
+	(vw::prompt-plot-by :dim 1 :plot-fn 'vw::histogram-view))
 
 (define-qmbar-command com-barby-PSVSB ()
-	(vw::prompt-plot-by :dim 1 :plot-fn 'bar-chart))
+	(vw::prompt-plot-by :dim 1 :plot-fn 'vw::bar-chart))
 
 (define-qmbar-command com-boxby-PSVSB ()
-	(vw::prompt-plot-by :dim 1 :plot-fn 'boxplot-view))
+	(vw::prompt-plot-by :dim 1 :plot-fn 'vw::boxplot-view))
 
 (define-qmbar-command com-dotby-PSVSB ()
-	(vw::prompt-plot-by :dim 1 :plot-fn '1d-point-cloud))
+	(vw::prompt-plot-by :dim 1 :plot-fn 'vw::1d-point-cloud))
 
 (define-qmbar-command com-plotby-PSVSB ()
 	(vw::prompt-plot-by :dim 1))
@@ -122,22 +122,22 @@
    ;;; START P/TV SB Two variates Sub-menu
 ;;; the commands
 (define-qmbar-command com-scatter-PTVSB ()
-	(vw::prompt-plot :dim 2 :plot-fn #'scatterplot))
+	(vw::prompt-plot :dim 2 :plot-fn #'vw::scatterplot))
 
 (define-qmbar-command com-linespl-PTVSB ()
-	(vw::prompt-plot :dim 2 :plot-fn #'lines-plot))
+	(vw::prompt-plot :dim 2 :plot-fn #'vw::lines-plot))
 
 (define-qmbar-command com-linseg-PTVSB ()
-	(vw::prompt-plot :dim 2 :plot-fn #'line-segment-2d-plot))
+	(vw::prompt-plot :dim 2 :plot-fn #'vw::line-segment-2d-plot))
 
 (define-qmbar-command com-plot-PTVSB ()
 	(vw::prompt-plot :dim 2))
 
 (define-qmbar-command com-scatterby-PTVSB ()
-	(vw::prompt-plot-by :dim 2 :plot-fn #'2d-point-cloud))
+	(vw::prompt-plot-by :dim 2 :plot-fn #'vw::2d-point-cloud))
 
 (define-qmbar-command com-linesby-PTVSB ()
-	(vw::prompt-plot-by :dim 2 :plot-fn #'lines))
+	(vw::prompt-plot-by :dim 2 :plot-fn #'vw::lines))
 
 (define-qmbar-command com-plotby-PTVSB ()
 	(vw::prompt-plot-by :dim 2))
