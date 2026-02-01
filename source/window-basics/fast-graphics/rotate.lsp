@@ -148,8 +148,8 @@
                                   stop-fn)
   "Rotates a point-cloud using plotting traps. The point cloud is in list form~
    with each sublist an x,y,z observation. !!"
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline canvas-move-axes
                    ;rotatef
                    canvas-move-symbols
@@ -157,7 +157,8 @@
                    ;incf
                    )
            )
-  
+  #-:sbcl(declare (optimize (speed 3) (safety 0)
+                     (space 0) (compilation-speed 0)))
   (let ((data (append points axes )))
         
     (if viewport-coords?
@@ -284,8 +285,8 @@
     )))
 (defmethod mapply-rotation! ((rot 3d-rotate) (a list) &key (integer? t))
   #-:sbcl(declare (optimize (speed 3) (safety 0) (space 0) (compilation-speed 0))
-           (inline mapply-transform! ))
-  (declare (inline elt round * / float))
+           )
+  (declare (inline elt round * / float mapply-transform!))
   (if integer?
     (mapply-transform! rot a)
     (let* ((big 10000)
@@ -368,13 +369,12 @@
    where points has even length, each pair giving the segment endpoints. "
   #-:sbcl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0))
-           (inline canvas-move-axes
-                   canvas-move-lines
-                   mapply-transform-store
                    )
-           )
   (declare (inline ;rotatef 
                    ;incf
+                   canvas-move-axes
+                   canvas-move-lines
+                   mapply-transform-store
                    ))
   
   (let ((data (append points axes )))
@@ -493,13 +493,12 @@
    where points has even length, each pair giving the segment endpoints. "
   #-:sbcl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0))
-           (inline canvas-move-axes
-                   canvas-move-lines
-                   mapply-transform-store
-                   )
            )
   (declare (inline ;rotatef 
                    ;incf
+                   canvas-move-axes
+                   canvas-move-lines
+                   mapply-transform-store
                    ))
   
   (let ((data (append points axes )))
