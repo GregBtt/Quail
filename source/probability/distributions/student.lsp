@@ -41,8 +41,8 @@
 ;;; The random-value was generated from a standard-gaussian and chi-squared distribution.
 
 (defmethod cdf-at ((dist student) a)
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline incomplete-beta))
   (with-CL-functions (+ * / - exp expt sqrt > < =)
     (let* ((df (df-of dist))
@@ -55,8 +55,8 @@
         (- 1 (* .5 (incomplete-beta d .5 x)))))))
 
 (defmethod pdf-at ((dist student) a)
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline log-gamma))
   (with-CL-functions (+ * / - exp expt sqrt > < =)
     (let* ((df (eref (df-of dist) 0))
@@ -73,8 +73,9 @@
                         (percentile number)
                         &key (start NIL))
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
+           )
   (with-CL-functions (+ * / - exp expt sqrt > < =)
     (let*
       ((location (eref (location-of dist) 0))
@@ -207,10 +208,10 @@
 
 
 (defmethod random-value ((dist student) &optional (n 1))
-  (declare ;(ignore start) ;28NOV2024
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare ;(ignore start) ;28NOV2024
+  ;         (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
     (let ((df (df-of dist)))
       (+ (* (scale-of dist) (/ (random-gaussian :n n)
                                (sqrt (/ (random-chi :n n :df df)
