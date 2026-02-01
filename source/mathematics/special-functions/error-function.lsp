@@ -51,67 +51,67 @@
 ;;;
 
 (defun error-function 
-       (x &key (max-iterations 100) (epsilon 1.0D-7))
+  (x &key (max-iterations 100) (epsilon 1.0D-7))
   "Returns the error function erf(x). Calculated by incomplete-gamma.~
-   (:required (:arg x A real valued number)) ~
-   (:key ~
-   (:arg max-iterations 100 Maximum number of iterations before ~
-   divergence of the incomplete-gamma is declared.) ~
-   (:arg epsilon 1.0D-7 Convergence criterion for incomplete gamma calculation.) ~
-   ) ~
-   (:see-also (error-function-complement :function) ~
-   (incomplete-gamma :function) ~
-   ) ~
-   (:examples ~
-   (:files (Error function ~
-   eg:Mathematics;Special-Functions;error-fun.lisp ~
-   ) ~
-   ) ~
-   )"
-  (declare (type number x)
+  (:required (:arg x A real valued number)) ~
+  (:key ~
+  (:arg max-iterations 100 Maximum number of iterations before ~
+  divergence of the incomplete-gamma is declared.) ~
+  (:arg epsilon 1.0D-7 Convergence criterion for incomplete gamma calculation.) ~
+  ) ~
+  (:see-also (error-function-complement :function) ~
+  (incomplete-gamma :function) ~
+  ) ~
+  (:examples ~
+  (:files (Error function ~
+  eg:Mathematics;Special-Functions;error-fun.lisp ~
+  ) ~
+  ) ~
+  )"
+  #+:use-decl(declare (type number x)
            (type fixnum max-iterations)
-           (type float epsilon)
-           (optimize  (speed 3)
-                      (safety 3)))
+           (type float epsilon))
+  #-:use-decl(declare (optimize  (speed 3)
+                                  (safety 3)))
   (cond
-   ((= x 0) 0)
-   ((< x 0) (- (incomplete-gamma 0.5 (* x x)
+    ((= x 0) 0)
+    ((< x 0) (- (incomplete-gamma 0.5 (* x x)
+                                  :epsilon epsilon
+                                  :max-iterations max-iterations)))
+    (T (values (incomplete-gamma 0.5 (* x x)
                                  :epsilon epsilon
-                                 :max-iterations max-iterations)))
-   (T (values (incomplete-gamma 0.5 (* x x)
-                                :epsilon epsilon
-                                :max-iterations max-iterations)))))
+                                 :max-iterations max-iterations)))))
 
 (defun error-function-complement 
-       (x &key (max-iterations 100) (epsilon 1.0D-7))
+  (x &key (max-iterations 100) (epsilon 1.0D-7))
   "Returns the error function erfc(x) = 1 - erf(x).  ~
-   Calculated by incomplete-gamma.~
-   (:required (:arg x A real valued number)) ~
-   (:key ~
-   (:arg max-iterations 100 Maximum number of iterations before ~
-   divergence of the incomplete-gamma is declared.) ~
-   (:arg epsilon 1.0D-7 Convergence criterion for incomplete gamma calculation.) ~
-   ) ~
-   (:see-also (error-function :function) ~
-   (incomplete-gamma :function) ~
-   (incomplete-gamma-complement :function) ~
-   ) ~
-   (:examples ~
-   (:files (Error function ~
-   eg:Mathematics;Special-Functions;error-fun.lisp ~
-   ) ~
-   ) ~
-   )"
-  (declare (type number x)
+  Calculated by incomplete-gamma.~
+  (:required (:arg x A real valued number)) ~
+  (:key ~
+  (:arg max-iterations 100 Maximum number of iterations before ~
+  divergence of the incomplete-gamma is declared.) ~
+  (:arg epsilon 1.0D-7 Convergence criterion for incomplete gamma calculation.) ~
+  ) ~
+  (:see-also (error-function :function) ~
+  (incomplete-gamma :function) ~
+  (incomplete-gamma-complement :function) ~
+  ) ~
+  (:examples ~
+  (:files (Error function ~
+  eg:Mathematics;Special-Functions;error-fun.lisp ~
+  ) ~
+  ) ~
+  )"
+  #+:use-decl(declare (type number x)
            (type fixnum max-iterations)
-           (type float epsilon)
-           (optimize  (speed 3)
-                      (safety 3)))
+           (type float epsilon))
+  #-:use-decl(declare (optimize  (speed 3)
+                                  (safety 3)))
   (cond
-   ((= x 0) 1)
-   ((< x 0) (+ 1.0 (incomplete-gamma 0.5 (* x x)
-                                     :epsilon epsilon
-                                     :max-iterations max-iterations)))
-   (T (values (incomplete-gamma-complement 0.5 (* x x)
-                                   :epsilon epsilon
-                                   :max-iterations max-iterations)))))
+    ((= x 0) 1)
+    ((< x 0) (+ 1.0 (incomplete-gamma 0.5 (* x x)
+                                      :epsilon epsilon
+                                      :max-iterations max-iterations)))
+    (T (values (incomplete-gamma-complement 0.5 (* x x)
+                                            :epsilon epsilon
+                                            :max-iterations max-iterations)))))
