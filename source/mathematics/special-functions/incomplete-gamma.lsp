@@ -58,7 +58,7 @@
 ;;;
 ;;;---------------------------------------------------------------------------------
 
-(proclaim '(sb-ext:maybe-inline incomplete-gamma)) ;24NOV2024
+#+:use-dclm(declaim (sb-ext:maybe-inline incomplete-gamma)) ;15DEC2024
 (defun incomplete-gamma
        (a x &key (epsilon 1.0D-7) (max-iterations 100))
   "Returns two values.  The first is the incomplete gamma function P(a,x) ~
@@ -67,7 +67,7 @@
    The second is log-gamma(a) + log (P(a,x)) and is ~
    sometimes denoted as the natural log of lower-case-gamma(a,x)."
 
-  (declare (optimize (speed 3) (safety 0)
+  #+:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0)))
   
   
@@ -120,7 +120,7 @@
    sometimes denoted as upper-case-gamma(a,x)."
   
 
-  (declare (optimize (speed 3) (safety 0)
+  #+:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0)))
   
   (cond
@@ -166,7 +166,7 @@
    when x < a + 1. ~
    The second is the natural log of gamma(a)."
   
-  (declare (optimize (speed 3) (safety 0)
+  #+:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0))
            )
 
@@ -205,7 +205,7 @@
    Evaluation is via a continued fraction expansion.  Converges rapidly when ~
    x > a + 1.  ~
    The second is the natural log of gamma(a)."
-  (declare (optimize (speed 3) (safety 0)
+  #+:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0)))
   
   (let ((ln-gamma-a (log-gamma a))
