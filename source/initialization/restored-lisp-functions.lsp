@@ -20,7 +20,18 @@
 ;;; Top-level functions to be restored first.
 ;;;
 
-(add-restore-lisp-functions  #'setup-system-top-level-loop-variable
+#+:sbcl-linux(add-restore-lisp-functions  ;#'setup-system-top-level-loop-variable
+                             ;#'setup-legal-top-level-loop-functions
+                             ;#'setup-legal-quail-loop
+                             #'qk::find-quail
+                            ;; #'(lambda () (ccl:eval-enqueue '(quail)))
+                            ;;#'install-quail-menubar
+                             #'qk::load-quail-init
+                            ;; The following seems to cause a problem in MCL 4.1 +
+                            ;; #'qk::quail-release-print
+                            )
+
+#-:sbcl-linux(add-restore-lisp-functions  #'setup-system-top-level-loop-variable
                              #'setup-legal-top-level-loop-functions
                              #'setup-legal-quail-loop
                              #'qk::find-quail
