@@ -47,8 +47,8 @@
 
 
 (defmethod (setf lower-bound-of) (new-value (dist hypergeometric))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (unless (and (integerp (eref new-value 0))
                (= new-value 0))
     (quail-error "Lower bound is zero and cannot be changed to ~s ." new-value))
@@ -56,8 +56,8 @@
 
 
 (defmethod (setf upper-bound-of) (new-value (dist hypergeometric))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (unless (and (integerp (eref new-value 0))
                (= new-value
                   (min (total-successes-of dist)
@@ -67,8 +67,8 @@
   )
 
 (defmethod (setf sample-size-of) (new-value (dist hypergeometric))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (unless (and (integerp (eref new-value 0))
                (> new-value 0)
                (<= new-value (+ (total-successes-of dist)
@@ -86,8 +86,8 @@
 
 
 (defmethod (setf total-successes-of) (new-value (dist hypergeometric))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (unless (and (integerp (eref new-value 0))
                (>= new-value (sample-size-of dist)))
     (quail-error "Total number of successes must be an integer and >= ~s , ~
@@ -138,8 +138,8 @@
 ;;;------------------------------------------
 
 (defmethod pdf-at ((dist hypergeometric) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (+ * / -  >= <= )
     (let ((successes (eref (total-successes-of dist) 0))
           (failures (eref (total-failures-of dist) 0))
@@ -162,8 +162,8 @@
 ;------------------------------------------
 
 (defmethod cdf-at ((dist hypergeometric) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (floor >= < )
     (let ((intx (floor x)))
       (cond ((< intx 0) 0)
@@ -181,8 +181,9 @@
                         (p number)
                         &key (start NIL))
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
+           )
   (bisection dist p)
   )
 
@@ -191,8 +192,8 @@
 ;------------------------------------------
 
 (defmethod random-value ((dist hypergeometric) &optional  (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (if (= n 1)
     (quantile-at dist (random-uniform ))
     (array
