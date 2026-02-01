@@ -53,8 +53,7 @@
   (setf (lines-coords-of self) nil))
 
 (defmethod lines-coords-of  ((self simple-lines))
-  (declare (ignore args))
-  
+  ;(declare (ignore args)
   (or (slot-value self 'lines-coords)
       (setf (lines-coords-of self) 
             (if (and (order-fn-of self) (plot-coords-of self))
