@@ -77,8 +77,8 @@
 ;;;  quantile at p :   u - s * ln ( 1 - p )
 
 (defmethod pdf-at ((distribution exponential-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (+ * / - exp expt sqrt > < = /= <=)
     (let ((sigma (scale-of distribution)))
       (/ (exp (/ (- (location-of distribution) x) sigma))
@@ -91,8 +91,8 @@
 ;*************************
 
 (defmethod cdf-at ((distribution exponential-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (+ * / - exp)
     (- 1 (exp (/ (- (location-of distribution) x) (scale-of distribution))))))
 
@@ -100,8 +100,8 @@
 ;***************************
 
 (defmethod random-value ((distribution exponential-dist) &optional (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (let ((loc (eref (location-of distribution) 0))
         (s   (eref (scale-of distribution) 0)))
     (if (= n 1)
@@ -123,8 +123,9 @@
                         (p number)
                         &key (start NIL))
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
+           )
   (let ((loc (eref (location-of distribution) 0))
         (s   (eref (scale-of distribution) 0)))
     (with-CL-functions (+ * / - exp log)
