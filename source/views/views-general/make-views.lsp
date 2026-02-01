@@ -66,9 +66,10 @@
 
 (defun make-view-constructor-doc-string(default-class)
   ;(declare (ignore default-args)) 10MAR2022 gwb probably a cut+paste
-  (format nil 
-          "This function constructs and returns a ~A."
-          default-class ))
+  ;(format nil 
+  ;       "This function constructs and returns a ~A."
+  ;        default-class )
+  )
 
 
 
@@ -99,8 +100,8 @@
   
   (let ((doc (make-view-constructor-doc-string
               default-class)))
-    (format t "~%[1] Just inside make-view-constructor-with-doc")
-    (format t "~%[2] doc is ~s " doc)
+    ;(format t "~%[1] Just inside make-view-constructor-with-doc")
+    ;(format t "~%[2] doc is ~s " doc)
     (apply #'make-view-constructor 
            function-name default-class doc default-args)))
 
@@ -145,7 +146,7 @@
           finally (return (if (and nmax (> (length result-list) nmax))
                             (mapcar #'second (subseq result-list 0 nmax))
                             (mapcar #'second result-list))))))
-#|
+
 (make-view-constructor-with-doc 'view 'view )
 (make-view-constructor-with-doc 'point-symbol 'point-symbol )
 (make-view-constructor-with-doc 'box 'point-symbol :symbol :box)
@@ -210,4 +211,3 @@
 (make-view-constructor-with-doc 'view-layers 'view-layers )
 (make-view-constructor-with-doc 'scroll-bar 'scroll-bar )
 (make-view-constructor-with-doc 'scrolling-display 'scrolling-display )
-|#
