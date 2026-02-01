@@ -81,8 +81,8 @@
 ;;;***************************
 
 (defmethod pdf-at ((distribution K-dist) (y number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline log-gamma))
   (with-CL-functions (+ * / - exp log =)
     (if (= y 0.0)
@@ -102,8 +102,8 @@
 
 (defmethod cdf-at ((distribution K-dist) (x number))
   "Derived from relation to Chi-squared."
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline incomplete-gamma))
   (if (> x 0)
     (with-CL-functions (/ -)
@@ -115,8 +115,8 @@
 
 (defmethod random-value ((distribution K-dist) &optional (n 1))
   "Derived from relation to Chi-squared."
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (let* ((m (eref (df-of distribution) 0)))
       (sqrt (/ (random-chi :n n :df m) m ))))
       
@@ -129,8 +129,9 @@
                         &key (start NIL))
   "Derived from relation to Chi-squared."
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
+           )
   (let ((m (eref (df-of distribution) 0)))
     (sqrt (/ (quantile-chi p :df m) m))))
   
