@@ -54,8 +54,8 @@
 ;   PDF-AT
 ;------------------------------------------
 (defmethod pdf-at ((dist finite-mixture) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (*)
     (loop for f in (distributions-of dist)
           as p in (mixing-probs-of dist)
@@ -68,8 +68,8 @@
 ;   CDF-AT
 ;------------------------------------------
 (defmethod cdf-at ((dist finite-mixture) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (*)
     (loop for f in (distributions-of dist)
           as p in (mixing-probs-of dist)
@@ -96,8 +96,9 @@
                         (p number)
                         &key (start NIL))
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
+           )
   (cond ((all-continuous dist) (Cquantile-at dist p))
         ((all-discrete dist) (Dquantile-at dist p))
         (T (quail-error "This program cannot handle the mixtures which include
@@ -106,8 +107,8 @@
   )
 
 (defmethod all-continuous ((dist finite-mixture))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (let ((all-type-continuous T))
       (loop for f in (distributions-of dist)
             do
@@ -119,8 +120,8 @@
       ))
 
 (defmethod all-discrete ((dist finite-mixture))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (let ((all-type-discrete T))
       (loop for f in (distributions-of dist)
             do
@@ -132,8 +133,8 @@
       ))
 
 (defmethod Dquantile-at ((dist finite-mixture) p)
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (+ <= abs log)
     (let ((sum 0) (count 0))
       (loop for mp in (mixing-probs-of dist)
@@ -148,8 +149,8 @@
 
 
 (defmethod Cquantile-at ((dist finite-mixture) p)
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (multiple-value-bind (l u) (find-limits dist p)
     (bisection dist p :lower l :upper u))
   )
@@ -162,8 +163,8 @@
 ;     by invention method.
 ;------------------------------------------
 (defmethod random-value ((dist finite-mixture) &optional (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (let ((u-s (random-uniform :n n)))
     (array
      ; (loop for i from 0 to (- n 1) do
