@@ -33,8 +33,8 @@
 (defmethod bisection ((distn prob-measure) prob
                       &key (lower nil) (upper nil) (epsilon 1.0d-10) (max-it 500))
   "Return one value. the value, inverse cdf at prob, is found using bisection method."
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline same))
   (with-CL-functions (+ * / - exp expt sqrt > < =)
     (let ((m) (it 0))
@@ -63,9 +63,9 @@
 (defmethod same ((distn prob-measure) x prob
                  &key (epsilon 1.0d-10))
   "Return t if prob is in interval (cdf(x-epsilon),cdf(x)]"
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (with-CL-functions (+ * / - exp expt sqrt > < =)
     (cond
      ((and (> prob (cdf-at distn (- x epsilon)))
@@ -88,8 +88,8 @@
                       &key (lower nil) (upper nil)
                       (epsilon 1.0d-10) (max-it 500))
   "Return an integer which is inverse (discrete) cdf at prob"
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline incomplete-gamma))
   (with-CL-functions (+ * / - exp expt sqrt > < => <=)
     (let ((m) (it 0))
