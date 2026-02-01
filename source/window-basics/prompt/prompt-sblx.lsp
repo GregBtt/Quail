@@ -232,7 +232,8 @@
    (:see-also pick-one prompt-t-or-f)"
   (if (functionp item-function)
     (cond ((eql selection-type :single)
-      (pick-one list :prompt-text prompt-text))
+      (check-items list :prompt-text prompt-text);(pick-one list :prompt-text prompt-text)
+      )
     ((eql selection-type :disjoint)
     (check-items list :prompt-text prompt-text))
     ((eql selection-type :contiguous)
