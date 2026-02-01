@@ -47,7 +47,7 @@
      (:examples (:files 
      (general eg:Views;Plots;general.lsp)))~
      "
-     (declare (ignore  data by batches var))
+     (declare (ignore  data)); by batches var) ) ;14DEC2024
      (apply pie-local args))
   
   )
