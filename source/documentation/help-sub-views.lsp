@@ -1357,7 +1357,7 @@
                 :body (format NIL "No class slots are defined directly on ~%
                                    the class ~a."
                               (string-downcase
-                               (format NIL "s"
+                               (format NIL "~s"
                                        (class-name class))))
                 )
                )
@@ -1400,7 +1400,7 @@
                 :body (format NIL "No instance slots are defined directly on ~%
                                    the class ~a."
                               (string-downcase
-                               (format NIL "s"
+                               (format NIL "~s"
                                        (class-name class))))
                 )
                )
