@@ -79,8 +79,8 @@
 
 
 (defmethod pdf-at ((bi binomial-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline choose))
   (multiple-value-bind
     (integer-x frac-x)
@@ -106,9 +106,9 @@
 
 
 (defmethod cdf-at ((bi binomial-dist) x)
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (let (intx)
     (cond
      ((not (numberp x)) (quail-error "~s is not a number!" x))
@@ -132,8 +132,8 @@
 
 
 (defmethod random-value ((bi binomial-dist) &optional (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (let ((rand 0)
         (p (p-of bi)))
     ; (loop for i from 1 to (upper-bound-of bi) do
@@ -154,10 +154,10 @@
 
 
 (defmethod quantile-at ((bi binomial-dist) (prob number) &key (start 0))
-  (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (ignore start)
+  ;         (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (bisection bi prob))
 
 
