@@ -43,16 +43,16 @@
 ;;;
 ;;;-----------------------------------------------------------------------------------
 
-(proclaim '(sb-ext:maybe-inline incomplete-beta)) ;24NOV2024
+#+:use-dclm(declaim (sb-ext:maybe-inline incomplete-beta)) ;15DEC2024
 (defun incomplete-beta (a b x &key (max-iterations 100)
                                    (epsilon 3.0D-7))
   "Returns the value of the cumulative distribution ~
    function of a beta(a,b) random variable evaluated at the point x.  ~
    That is the value of the incomplete beta function Ix(a,b)."
   
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           (inline log-gamma incomplete-beta-cf))
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
+                    (space 0) (compilation-speed 0)))
+  #+:use-decl(declare   (inline log-gamma incomplete-beta-cf))
   (cond ((= x 0) 0.0)
         ((= x 1) 1.0)
         ((or (< x 0) (> x 1))
@@ -86,13 +86,13 @@
                                           :max-iterations max-iterations))
                    b)))))))
 
-(proclaim '(sb-ext:maybe-inline incomplete-beta-cf)) ;24NOV2024
+#+:use-dclm(declaim (sb-ext:maybe-inline incomplete-beta-cf)) ;15DEC2024
 (defun incomplete-beta-cf (a b x &key (max-iterations 100)
                                       (epsilon 3.0D-7))
   "Continued fraction for incomplete-beta function."
 
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  #+:use-decl(declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline incomplete-beta))
   (let*
     ((am 1.0)
