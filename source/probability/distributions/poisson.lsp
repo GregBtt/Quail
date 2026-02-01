@@ -53,8 +53,8 @@
 
 
 (defmethod pdf-at ((dist poisson-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (+ * / - expt exp)
     (let ((mean (eref (mean dist) 0)))
       (if (and (integerp x) (>= x 0))
@@ -73,8 +73,8 @@
 
 
 (defmethod cdf-at ((dist poisson-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (+ floor)
     (let ((mean (eref (mean dist) 0)))
       (multiple-value-bind
@@ -129,8 +129,9 @@
                         (prob number)
                         &key (start NIL))
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
+           )
   (with-CL-functions (floor)
     (let ((m (floor (eref (mean dist) 0))))
       (multiple-value-bind (l u) (find-limits dist prob :increment m)
