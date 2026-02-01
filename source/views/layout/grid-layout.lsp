@@ -391,7 +391,7 @@
                     ((<= n 1) n)
                     (t
                      (wb:prompt-user 
-                      :type 'number 
+                      :result-type 'number 
                       :read-type :eval
                       :prompt-string (format nil "~S views, how many rows?" n))))))
         (setf (layout-format-of self) (list nrows ncols))
@@ -409,7 +409,7 @@
                     (nrows (ceiling  n nrows))
                     ((<= n 1) n)
                     (t (wb:prompt-user 
-                        :type 'number 
+                        :result-type 'number 
                         :read-type :eval
                         :prompt-string (format nil "~S views, how many columns?" n))))))
         (setf (layout-format-of self) (list nrows ncols))
