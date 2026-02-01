@@ -123,8 +123,8 @@
            
 
 (defmethod pdf-at ((distribution F-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline log-gamma))
   (with-CL-functions (+ * / - exp log =)
     (if (= x 0.0)
@@ -149,8 +149,8 @@
 
 
 (defmethod cdf-at ((distribution F-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (*)
     (let* ((m (df-num-of distribution))
            (n (df-den-of distribution))
@@ -162,8 +162,8 @@
 
 
 (defmethod random-value ((distribution F-dist) &optional (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (let* ((m (df-num-of distribution))
          (d (df-den-of distribution))
          (x  (random-beta :n n :a (/ m 2) :b (/ d 2))))
@@ -175,8 +175,9 @@
 (defmethod quantile-at ((distribution F-dist) (p number)
                         &key (start NIL))
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
+           )
   (with-CL-functions (* / -)
     (let* ((m (df-num-of distribution))
            (n (df-den-of distribution))
