@@ -32,13 +32,19 @@
 
 
 (defun prompt-for-dataset (&optional (msg "Enter dataset" ))
+  (format *error-output* "~%p-f-d[0] Entering prompt-for-dataset")
+  (format *error-output* "~%p-f-d[1] msg is ~s " msg)
   (let ((d (wb::prompt-user :result-type t :prompt-string msg :read-type :eval)))
-    (if (dataset-p d) d nil)))
+    (if (dataset-p d) d nil)
+    (format *error-output* "~%p-f-d[2] dataset is ~s " d)
+    )
+  )
 
 
 
 
 (defun dataset-menu-items ()
+  (format *error-output* "~%d-m-i[0] Entering dataset-menu-items")
   (if *datasets*
     (append
      (list (list "A new one?" nil))
@@ -47,8 +53,13 @@
            (if (and (consp d) (stringp (car d)))
              (setq name (car d) dset (cdr d))
              (setq name (dataset-name d) dset d))
+           do (format *error-output* "~%d-m-1[.1] name is ~s " name)
            when name
-           collect (list name dset)))))
+           do
+           (format *error-output* "~%d-m-i[1] name is ~s " name)
+           (format *error-output* "~%d-m-i[2] dset is ~s " dset)
+           collect (list name dset))
+     )))
 
 
 (defun variable-menu-items (dataset)
@@ -62,8 +73,10 @@
 (defun choose-dataset (&optional 
                        (msg NIL))
   (declare (special *current-dataset* *saved-selections*))
+  (format *error-output* "~%c-d[0] Entering choose-dataset")
   (let ((menu-items (append (dataset-menu-items) *saved-selections*))
         dataset)
+    (format *error-output* "~%c-d[1] menu-items are ~s " menu-items)
     (when menu-items
       
       (setq dataset
@@ -78,6 +91,7 @@
                      (if msg msg "Enter dataset"))))
     (if (dataset-p dataset)
       (setq *current-dataset* dataset))
+    (format *error-output* "~%c-d[1] dataset is ~s " dataset)
     dataset))
       
 
@@ -89,6 +103,11 @@
 
 (defun choose-variable (&optional dataset (n 1) msg menu-items)
   "Choose n variables from dataset"
+  (format *error-output* "~%c-v[0]Entering choose-variable")
+  (format *error-output* "~%c-v[1] dataset is ~s " dataset)
+  (format *error-output* "~%c-v[2] n is ~d " n)
+  (format *error-output* "~%c-v[3] msg is ~s " msg)
+  (format *error-output* "~%c-v[4] menu-items are ~s " menu-items)
   (setq msg (or msg
                 (if (= n 1) "Choose a variable"
                     (format nil "Choose ~A  variables" n))))
@@ -105,17 +124,26 @@
               when result append result into result-list and
            do (setq msg (format nil "Choose ~A  more" (- n (length result-list))))
               until (>= (length result-list) n )
-              finally (return (subseq  (mapcar #'second result-list) 0 n))))
+              do(format *error-output* "~%c-v[5] result-list is ~s " result-list)
+              finally (return (subseq  (mapcar #'second result-list) 0 n)))
+        )
       (loop for i from 1 to n  collect
-            (wb::prompt-user :result-type t :read-type :eval :prompt-string msg))))
+            (wb::prompt-user :result-type t :read-type :eval :prompt-string msg)))
+    )
 
 
 (defun choose-some-variables (&optional dataset (n 1) msg menu-items)
   "Choose n or more variables from dataset"
+  (format *error-output* "~%c-s-v[0] Entering choose-some-variables")
+  (format *error-output* "~%c-s-v[1] dataset is ~s " dataset)
+  (format *error-output* "~%c-s-v[2] n is ~d " n)
+  (format *error-output* "~%c-s-v[3] msg is ~s " msg)
+  (format *error-output* "~%c-s-v[4] menu-items are ~s " menu-items)
   (setq msg (or msg
                 (format nil "Choose ~A or more variables" n)))
   
   (setq menu-items (or menu-items (if dataset (variable-menu-items dataset))))
+  (format *error-output* "~%c-s-v[5] menu-items now are ~s " menu-items)
     (if menu-items
       (loop for res =  (reverse (wb:prompt-for-items menu-items :prompt-text msg
                                               :item-function #'first
@@ -124,6 +152,7 @@
              do (setq msg (format nil "Choose ~A  or more" (- n (length result))))
             
             until (>= (length result) n)
+            do (format *error-output* "~%c-s-v[6] result is ~s " result)
             finally (return (mapcar #'second result)))
       
       (loop with v = t 
@@ -131,6 +160,7 @@
             do
             (setq v (wb::prompt-user :result-type t :read-type :eval :prompt-string msg))
             when v collect v into var
+            do (format *error-output* "~%c-s-v[7] var is ~s " var)
             finally (return var))))
 
 
@@ -166,6 +196,11 @@
    list-variates function to the dataset. "
   
   ;;(unless vars (setq vars :prompt))
+  (format *error-output* "~%g-d-is[0] Entering get-data-inits")
+  (format *error-output* "~%g-d-is[1] nvars is ~d " nvars)
+  (format *error-output* "~%g-d-is[2] min-nvars is ~d " min-nvars)
+  (format *error-output* "~%g-d-is[3] data is ~s " data)
+  (format *error-output* "~%g-d-is[4] vars is ~s " vars)
   (when (or (eq data :prompt) (null data) (eq vars :prompt))
     (if (and (or (eq data :prompt) (null data)) (eq vars :prompt))
       (setq data (choose-dataset)))
@@ -179,6 +214,9 @@
       (setq data (apply #'make-dataset-from-vars vars))
       (if (dataset-p  data)
         (setq vars (list-variates data))))
+  (format *error-output* "~%g-d-is[5] data is now ~s " data)
+  (format *error-output* "~%g-d-is[6] vars is now ~s " vars)
+    
     
     (list :data data :vars vars)))
 
@@ -194,7 +232,10 @@
    function is used to build a dataset from VAR, and VAR becomes ~
    the first index into the dataset obtained by applying the ~
    list-variates function to the dataset."
-  
+  (format *error-output* "~%g-d-i1[0] Entering get-data-inits-1")
+  (format *error-output* "~%g-d-i1[1] data is ~s " data)
+  (format *error-output* "~%g-d-i1[2] var is ~s " var)
+  (format *error-output* "~%g-d-i1[3] vars are ~s " vars)
   
   (when (or (eq data :prompt) (null data) (eq var :prompt))
     (if (and vars (eq var :prompt))
@@ -209,6 +250,9 @@
       (setq data (make-dataset-from-vars var))
       (if (dataset-p data)
         (setq var (car (list-variates data)))))
+    
+  (format *error-output* "~%g-d-i1[4] data is now ~s " data)
+  (format *error-output* "~%g-d-i1[5] vars is now ~s " vars)
     
     (list :data data :var var)))
          
@@ -225,6 +269,11 @@
    is used to build a dataset from X and Y, and X and Y becomes the first ~
    and second indices into the dataset obtained by applying the ~
    list-variates function to the dataset."
+   (format *error-output* "~%g-d-i2[0] Entering get-data-inits-2")
+   (format *error-output* "~%g-d-i2[1] data is ~s " data)
+   (format *error-output* "~%g-d-i2[2] vars are ~s " vars)
+   (format *error-output* "~%g-d-i2[3] x is ~s " x)
+   (format *error-output* "~%g-d-i2[3] y  is ~s " y)
   
   (when (or (eq data :prompt) (null data) (eq x :prompt) (eq y :prompt))
     (when vars
@@ -251,6 +300,9 @@
       (if (dataset-p data)
       (multiple-value-setq (x y) (values-list  (list-variates data)))))
     
+   (format *error-output* "~%g-d-i2[4] data is now  ~s " data)
+   (format *error-output* "~%g-d-i2[5] x is now ~s " x)
+   (format *error-output* "~%g-d-i2[6] y  is now ~s " y)
     (list :data data :x x :y y)))
 
 
@@ -269,6 +321,12 @@
    is used to build a dataset from X,Y and Z, and X,Y and Z becomes the first ~
    second and third indices into the dataset obtained by applying the ~
    list-variates function to the dataset."
+   (format *error-output* "~%g-d-i3[0] Entering get-data-inits-3")
+   (format *error-output* "~%g-d-i3[1] data is ~s " data)
+   (format *error-output* "~%g-d-i3[2] vars are ~s " vars)
+   (format *error-output* "~%g-d-i3[3] x is ~s " x)
+   (format *error-output* "~%g-d-i3[3] y  is ~s " y)
+   (format *error-output* "~%g-d-i3[4] z is ~s " z)
   
   ;;(unless x (setq x :prompt))
   ;;(unless y (setq y :prompt))
@@ -292,6 +350,11 @@
       (setq data (make-dataset-from-vars x y z))
       (if (dataset-p data)
         (multiple-value-setq (x y z) (values-list  (list-variates data)))))
+    
+   (format *error-output* "~%g-d-i3[5] data is now ~s " data)
+   (format *error-output* "~%g-d-i3[6] x is now ~s " x)
+   (format *error-output* "~%g-d-i3[7] y  is now ~s " y)
+   (format *error-output* "~%g-d-i3[8] z is now ~s " z)
     
     (list :data data :x x :y y :z z)))
 
