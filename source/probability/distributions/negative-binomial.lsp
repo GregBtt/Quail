@@ -89,8 +89,8 @@
 ;;------------------------------------------------------------------------
 
 (defmethod pdf-at ((dist negative-binomial) (n number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (+ * / -  expt sqrt >=)
     (let ((x (eref (number-of-successes dist) 0))
           (p (eref (p-of dist) 0)))
@@ -102,8 +102,8 @@
         0))))
 
 (defmethod cdf-at ((dist negative-binomial) (n number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (with-CL-functions (+ * / -  expt sqrt >=)
     (let ((x (eref (number-of-successes dist) 0))
           (p (eref (p-of dist) 0)))
@@ -121,8 +121,8 @@
   )
 
 (defmethod random-value ((dist negative-binomial) &optional (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (let ((x (eref (number-of-successes dist) 0))
         (p (eref (p-of dist) 0))
         (sum 0))
