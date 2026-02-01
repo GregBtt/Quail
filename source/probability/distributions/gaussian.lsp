@@ -49,8 +49,8 @@
 ;;;  which required using cdf-at and the Illinois function.
 
 (defmethod cdf-at ((N gaussian-dist) (X number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline incomplete-gamma))
   (with-CL-functions (+ * / - exp expt sqrt > < =)
     (let ((z (/ (- x (location-of n)) (scale-of n))))
@@ -60,9 +60,9 @@
       )))
  
 (defmethod pdf-at ((N gaussian-dist) (X number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (with-CL-functions (+ * / - exp expt sqrt > < =)
     (let ((sigma (eref (scale-of N) 0))
           (location (eref (location-of N) 0)))
@@ -74,8 +74,8 @@
                         (p number)
                         &key (start NIL))
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            
            )
   "Calculates the inverse of the gaussian cumulative distribution ~
@@ -132,8 +132,8 @@
   
  
 (defmethod random-value ((dist gaussian-dist) &optional (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline random-uniform)
            )
   (with-CL-functions (+ * / - log expt sqrt > < =)
