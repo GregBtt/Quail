@@ -16,7 +16,7 @@
 (eval-when (:compile-toplevel :load-toplevel :execute) (export '(newton)))
 
 
-(proclaim '(sb-ext:maybe-inline newton)) ;24NOV2024
+#+:use-dclm(declaim (sb-ext:maybe-inline newton)) ;15DEC2024
 (defun newton (f  &key (start 0.0) (tolerance .0000001) (max-iterations 150) (deriv NIL))
   "Finds the root of the equation f(x) = 0 where f is a real-valued ~
    continuous function of a single numerical argument.  Uses Newton's method.~
@@ -37,8 +37,8 @@
    (:returns Returns multiple values.  The first is the root or the most recent ~
    value depending on whether convergence was reached or not.  The second value ~
    is T if the procedure converged and NIL otherwise.)"
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0)))
   (let ((xold) (xnew start) (converged? NIL))
     ;; Check if derivative is given.  If not, compute it.
     (unless (functionp deriv) (setf deriv (quail::deriv f)))
