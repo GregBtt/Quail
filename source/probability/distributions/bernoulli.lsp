@@ -63,9 +63,9 @@
 
 
 (defmethod  pdf-at ((distribution bernoulli) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (with-CL-functions ( = - )
     (let ((p (eref (p-of distribution) 0)))
       (cond ((= x 0)  (- 1 p))
@@ -74,9 +74,9 @@
       )))
 
 (defmethod  cdf-at ((distribution bernoulli)  (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (with-CL-functions ( = - < >)
     (let ((p (eref (p-of distribution) 0)))
       (cond ((< x 0) 0)
@@ -85,9 +85,9 @@
       )))
 
 (defmethod random-value ((distribution bernoulli) &optional (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (with-CL-functions (< =)
     (let ((p (p-of distribution)))
       (flet
@@ -105,8 +105,8 @@
 
 (defmethod quantile-at ((distribution bernoulli) q &key start)
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            )
   (with-CL-functions (>)
     (if (> q (p-of distribution))
@@ -116,8 +116,8 @@
 
 (defmethod quantile-at ((be bernoulli) (prob number) &key (start 0))
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            )
   (bisection be prob))
 
