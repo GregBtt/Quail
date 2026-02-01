@@ -103,8 +103,8 @@
 ;***************************
 
 (defmethod pdf-at ((distribution chi-squared) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
+  (declare ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
            (inline log-gamma))
   (with-CL-functions (+ * / - exp expt sqrt > < = /= )
     (/ (* (expt x (- (/ (df-of distribution) 2) 1))
@@ -121,9 +121,9 @@
 ;***************************
 
 (defmethod random-value ((distribution chi-squared) &optional (n 1))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (let ((w 1))
     (cond ((> (df-of distribution) 20)
            (call-next-method))
