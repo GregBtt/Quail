@@ -41,17 +41,17 @@
 ;;;----------------------------------------------------------------------------------  
 
 (defmethod cdf-at ((disc discrete-dist) (value number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (loop for i from 0 to (floor value)
         sum (pdf-at disc i)))
 
 ;; return pdf-at value
 (defmethod pdf-at ((disc discrete-dist) (value number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (with-CL-functions (/ -)
     (- (cdf-at disc value) (cdf-at disc (- value 1)))))
 
@@ -59,7 +59,8 @@
 
 (defmethod quantile-at ((disc discrete-dist) p &key (start NIL))
   (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0)))
+           ;(optimize (speed 3) (safety 0)
+           ;          (space 0) (compilation-speed 0))
+           )
   (multiple-value-bind (l u) (find-limits disc p) 
     (bisection disc p :lower l :upper u)))
