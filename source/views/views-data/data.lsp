@@ -47,7 +47,7 @@
 (defgeneric make-data-subset(dataset  case-list &key &allow-other-keys)
   (:documentation "Constructs a subset of dataset using case-list."))
 
-#+:sbcl-linux(proclaim '(sb-ext:maybe-inline dataset-p)) ;14NOV2024
+#+:use-dclm(declaim (sb-ext:maybe-inline dataset-p)) ;15DEC2024
 (defgeneric dataset-p (d)
   (:documentation "Test whether d is a viewable dataset."))
 
@@ -65,7 +65,7 @@
 (defgeneric inspect-data (d)
   (:documentation "Inspects the dataset d."))
 
-#+:sbcl-linux(proclaim '(sb-ext:maybe-inline dataset-name)) ;14NOV2024
+#+:use-dclm(declaim (sb-ext:maybe-inline dataset-name)) ;15DEC2024
 (defgeneric dataset-name (d)
   (:documentation "Returns the name of d if it has one")
   )
