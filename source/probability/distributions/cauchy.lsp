@@ -35,16 +35,16 @@
 ;;; All methods could be calculated directly.
 
 (defmethod cdf-at ((C cauchy-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (with-CL-functions (+ * / - exp expt sqrt > < = /= )
     (+ .5 (* (/ 1 pi) (atan (/ (- x (location-of C)) (scale-of C)))))))
 
 (defmethod pdf-at ((C cauchy-dist) (x number))
-  (declare (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (with-CL-functions (+ * / - exp expt sqrt > < = /= )
     (* (/ 1 pi) (/ 1 (+ 1 (expt (/ (- x (location-of C)) (scale-of C)) 2))))))
 
@@ -53,10 +53,10 @@
      (location-of C)))
 
 (defmethod quantile-at ((C cauchy-dist) (p number) &key start)
-  (declare (ignore start)
-           (optimize (speed 3) (safety 0)
-                     (space 0) (compilation-speed 0))
-           )
+  ;(declare (ignore start)
+  ;         (optimize (speed 3) (safety 0)
+  ;                   (space 0) (compilation-speed 0))
+  ;         )
   (with-CL-functions (+ * / - exp expt sqrt > < = /= )
     (+ (* (scale-of C) (tan (* pi (- p .5)))) (location-of C))))
 
