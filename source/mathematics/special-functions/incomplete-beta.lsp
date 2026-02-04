@@ -52,7 +52,7 @@
   
   #-:use-decl(declare (optimize (speed 3) (safety 0)
                     (space 0) (compilation-speed 0)))
-  #+:use-decl(declare   (inline log-gamma incomplete-beta-cf))
+  #+:use-decl(declare   (inline log-gamma )) ;incomplete-beta-cf))
   (cond ((= x 0) 0.0)
         ((= x 1) 1.0)
         ((or (< x 0) (> x 1))
@@ -91,9 +91,9 @@
                                       (epsilon 3.0D-7))
   "Continued fraction for incomplete-beta function."
 
-  #+:use-decl(declare ;(optimize (speed 3) (safety 0)
+  ;#+:use-decl(declare ;(optimize (speed 3) (safety 0)
            ;          (space 0) (compilation-speed 0))
-           (inline incomplete-beta))
+  ;         (inline incomplete-beta))
   (let*
     ((am 1.0)
      (bm 1.0)
