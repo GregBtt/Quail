@@ -120,7 +120,7 @@
    sometimes denoted as upper-case-gamma(a,x)."
   
 
-  #+:use-decl(declare (optimize (speed 3) (safety 0)
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0)))
   
   (cond
