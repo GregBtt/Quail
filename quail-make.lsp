@@ -321,6 +321,6 @@
   )    
       (format t "~% ~s loaded" system)
     )
-    
+(format t "~% Quail loaded")    
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; End of File ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
