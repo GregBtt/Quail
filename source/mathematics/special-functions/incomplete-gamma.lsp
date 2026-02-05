@@ -69,8 +69,6 @@
 
   #-:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0)))
-  
-  
   (cond
    ((or (not (numberp x))
         (< x 0.0))
@@ -166,7 +164,7 @@
    when x < a + 1. ~
    The second is the natural log of gamma(a)."
   
-  #+:use-decl(declare (optimize (speed 3) (safety 0)
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0))
            )
 
@@ -205,7 +203,7 @@
    Evaluation is via a continued fraction expansion.  Converges rapidly when ~
    x > a + 1.  ~
    The second is the natural log of gamma(a)."
-  #+:use-decl(declare (optimize (speed 3) (safety 0)
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0)))
   
   (let ((ln-gamma-a (log-gamma a))
