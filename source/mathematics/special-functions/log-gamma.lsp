@@ -35,9 +35,9 @@
   "Returns the natural logarithm of the gamma function evaluated at x>0.  ~
    If 0<x<1, the reflection formula is used. Source: Numerical Recipes."
   
-  ;(declare (optimize (speed 3) (safety 0)
-  ;                   (space 0) (compilation-speed 0))
-  ;         )
+  #-:use-decl(declare (optimize (speed 3) (safety 0)
+                     (space 0) (compilation-speed 0))
+           )
   (cond
    ((not (numberp x)) (quail-error "~s is not a number!" x))
    ((<= x 0) (quail-error "Argument must be positive: ~s" x))
