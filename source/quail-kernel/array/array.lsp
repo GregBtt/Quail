@@ -15,7 +15,7 @@
 
 (in-package :quail-kernel)
 
-;#+:sbcl-linux(shadow '(array dimensions)) ;; OUT 15 Nov 2019
+;#+:sbcl(shadow '(array dimensions)) ;; OUT 15 Nov 2019
 
 (eval-when (:compile-toplevel :load-toplevel :execute) (export '(array)))
 
@@ -196,7 +196,7 @@
 ;  array
 ;
 #|  OUT 15 November 2019
-#-:sbcl-linux(defgeneric array (contents &rest initargs 
+#-:sbcl(defgeneric array (contents &rest initargs 
                           &key &allow-other-keys)
   (:documentation
    "Creates an array whose contents are given by the first argument. ~
@@ -236,7 +236,8 @@
 ;; future?:     instance-copy element-type
   )
 |#
-#+:aclpc-linux(excl:without-package-locks 
+;#+:aclpc-linux(excl:without-package-locks
+(with-unlocked-packages
   (defgeneric array (contents &rest initargs 
                           &key &allow-other-keys)
   (:documentation
@@ -277,7 +278,8 @@
 ;; future?:     instance-copy element-type
   ))
 
-#+:sbcl-linux(sb-ext:without-package-locks
+#|
+#+:sbcl(sb-ext:without-package-locks
 (defgeneric array (contents &rest initargs 
                           &key &allow-other-keys)
   (:documentation
@@ -318,7 +320,7 @@
   )
 )
 
-#-(or :aclpc-linux :sbcl-linux)(defgeneric array (contents &rest initargs 
+#-(or :aclpc-linux :sbcl)(defgeneric array (contents &rest initargs 
                           &key &allow-other-keys)
   (:documentation
    "Creates an array whose contents are given by the first argument. ~
@@ -358,24 +360,25 @@
 ;; future?:     instance-copy element-type
   )
 
-
-#+:aclpc-linux(excl:without-package-locks
+|#
+;#+:aclpc-linux(excl:without-package-locks
+(with-unlocked-packages
 (defmethod array ((contents t) &rest initargs 
                 &key (dimensions :default) (class :default))
   (declare (ignorable initargs dimensions class)) ;(declare (ignore initargs dimensions class)) 25JUL2023
   (missing-method 'array contents)))
-
-#+:sbcl-linux(sb-ext:without-package-locks
+#|
+#+:sbcl(sb-ext:without-package-locks
 (defmethod array ((contents t) &rest initargs 
                 &key (dimensions :default) (class :default))
   (declare (ignorable initargs dimensions class)) ;(declare (ignore initargs dimensions class))  25JUL2023
   (missing-method 'array contents)))
 
-#-(or :sbcl-linux :aclpc-linux)(defmethod array ((contents t) &rest initargs 
+#-(or :sbcl :aclpc-linux)(defmethod array ((contents t) &rest initargs 
                 &key (dimensions :default) (class :default))
   (declare (ignorable initargs dimensions class)) ;(declare (ignore initargs dimensions class))  25JUL2023
   (missing-method 'array contents))
-
+|#
 
 (defmethod-multi array ((contents ((eql :empty) (eql :default)))
                       &rest initargs 
@@ -389,7 +392,20 @@
          :dimensions dimensions
          initargs))
 
-#+:aclpc-linux(excl:without-package-locks (defmethod-multi array ((contents (number symbol))
+;#+:aclpc-linux(excl:without-package-locks 
+(with-unlocked-packages
+  (defmethod-multi array ((contents (number symbol))
+                          &rest initargs 
+                          &key (dimensions :default) (class :default))
+                   (setf dimensions (array-provide-dimensions dimensions contents))
+                   (setf class (array-provide-class-name class dimensions contents))
+                   (apply #'initialize-contents 
+                          class 
+                          contents
+                          :dimensions dimensions
+                          initargs)))
+#|
+#+:sbcl(sb-ext:without-package-locks(defmethod-multi array ((contents (number symbol))
                       &rest initargs 
                       &key (dimensions :default) (class :default))
   (setf dimensions (array-provide-dimensions dimensions contents))
@@ -400,18 +416,7 @@
          :dimensions dimensions
          initargs)))
 
-#+:sbcl-linux(sb-ext:without-package-locks(defmethod-multi array ((contents (number symbol))
-                      &rest initargs 
-                      &key (dimensions :default) (class :default))
-  (setf dimensions (array-provide-dimensions dimensions contents))
-  (setf class (array-provide-class-name class dimensions contents))
-  (apply #'initialize-contents 
-         class 
-         contents
-         :dimensions dimensions
-         initargs)))
-
-#-(or :aclpc-linux :sbcl-linux)(defmethod-multi array ((contents (number symbol))
+#-(or :aclpc-linux :sbcl)(defmethod-multi array ((contents (number symbol))
                       &rest initargs 
                       &key (dimensions :default) (class :default))
   (setf dimensions (array-provide-dimensions dimensions contents))
@@ -421,21 +426,23 @@
          contents
          :dimensions dimensions
          initargs))
+|#
 
-
-#+:aclpc-linux (excl:without-package-locks (defmethod-multi array ((contents (dimensioned-ref-object list array scan-env))
-                        &rest initargs 
-                        &key (dimensions :default) (class :default)
-                        (deconstruct (not (stringp contents))))
-   (setf dimensions (array-provide-dimensions dimensions contents deconstruct))
-   (setf class (array-provide-class-name class dimensions contents deconstruct))
-   (apply #'initialize-contents 
-               class 
-               contents
-               :dimensions dimensions
-               initargs)))
-
-#+:sbcl-linux (sb-ext:without-package-locks (defmethod-multi array ((contents (dimensioned-ref-object list array scan-env))
+;#+:aclpc-linux (excl:without-package-locks 
+(with-unlocked-packages
+  (defmethod-multi array ((contents (dimensioned-ref-object list array scan-env))
+                          &rest initargs 
+                          &key (dimensions :default) (class :default)
+                          (deconstruct (not (stringp contents))))
+                   (setf dimensions (array-provide-dimensions dimensions contents deconstruct))
+                   (setf class (array-provide-class-name class dimensions contents deconstruct))
+                   (apply #'initialize-contents 
+                          class 
+                          contents
+                          :dimensions dimensions
+                          initargs)))
+#|
+#+:sbcl (sb-ext:without-package-locks (defmethod-multi array ((contents (dimensioned-ref-object list array scan-env))
                         &rest initargs 
                         &key (dimensions :default) (class :default)
                         (deconstruct (not (stringp contents))))
@@ -447,7 +454,7 @@
          :dimensions dimensions
          initargs)))
 
-#-(or :aclpc-linux :sbcl-linux)(defmethod-multi array ((contents (dimensioned-ref-object list array scan-env))
+#-(or :aclpc-linux :sbcl)(defmethod-multi array ((contents (dimensioned-ref-object list array scan-env))
                         &rest initargs 
                         &key (dimensions :default) (class :default)
                         (deconstruct (not (stringp contents))))
@@ -462,7 +469,7 @@
          contents
          :dimensions dimensions
          initargs))
-
+|#
 ;;;
 ;  fill-contents
 ;
@@ -604,12 +611,12 @@
 ;;; version checked with acl-express-10.1, sbcl-1.4.0, ccl-1.11
 (defmethod remove-illegal-make-instance-initargs ((class standard-class)
                                                   initargs)
-  ;#+(or :ccl :sbcl-linux (and :aclunix (not :aclpc)))
+  ;#+(or :ccl :sbcl (and :aclunix (not :aclpc)))
   (if initargs
     (remove-illegal-keys 
      #+:ccl (ccl::class-make-instance-initargs class)
      #+:aclpc-linux (excl::compute-class-initargs class)                                 
-     #+:sbcl-linux (mapcar #'car (mapcar 'sb-mop:slot-definition-initargs
+     #+:sbcl (mapcar #'car (mapcar 'sb-mop:slot-definition-initargs
       (sb-mop:compute-slots class)))
      initargs))
   #+:aclpc-mswin initargs
