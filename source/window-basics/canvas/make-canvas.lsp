@@ -119,7 +119,7 @@
 ;;;  Canvas functions
 ;;;
 
-#-:sbcl-linux(defun make-canvas (&rest canvas-keywords
+#-:sbcl(defun make-canvas (&rest canvas-keywords
                           &key
                           left bottom width height
                           region
@@ -168,7 +168,7 @@
   
   )
 
-#+:sbcl-linux(defun make-canvas (&rest canvas-keywords
+#+:sbcl(defun make-canvas (&rest canvas-keywords
                           &key
                           left bottom width height
                           region
