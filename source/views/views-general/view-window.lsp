@@ -87,12 +87,12 @@
 
 ;;; 2 added forms 27SEP2024 to allow for mcclim's defining things in window-basics, and its definition
 ;;;  of a region, while set-bounds is in views, with its separate defintion of a region
-#+:sbcl-linux(defun wb-to-vw (wb-region)
+#+:sbcl(defun wb-to-vw (wb-region)
       "Input: a window-basics region such as #(10 20 30 40)
        Output: a matching views region #(REGION 10 20 30 40)"
       (vector 'region (svref wb-region 0) (svref wb-region 1) (svref wb-region 2) (svref wb-region 3)))
 
-#+:sbcl-linux(defmethod set-bounds ((w wb::canvas)) ;wb::color-canvas))
+#+:sbcl(defmethod set-bounds ((w wb::canvas)) ;wb::color-canvas))
                (multiple-value-bind (l r b tp) (wb::canvas-bounds w)
                                     (setf (bounds-of (wb-to-vw (wb::region-of w))) (list l r b tp))))
 
