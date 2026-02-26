@@ -24,21 +24,21 @@
     :pathname "quail-kernel/"
     :components
     ((:quail-source-file "quail-kernel-package")
-
-     (:quail-source-file "quail-kernel-system-sblx" :if-feature :sbcl-linux)
+     (:quail-source-file "quail-locks")
+     (:quail-source-file "quail-kernel-system-sblx" :if-feature :sbcl)
      (:quail-source-file "quail-kernel-system-ccl"  :if-feature :ccl-1.11)
      (:quail-source-file "quail-kernel-system-pc"   :if-feature :aclpc-linux)
 
      (:module "mop"
       :pathname "mop/"              ; <- note: relative to quail-kernel/
       :components
-      ((:quail-source-file "mop-sblx" :if-feature :sbcl-linux)
+      ((:quail-source-file "mop-sblx" :if-feature :sbcl)
        (:quail-source-file "mop-ccl"  :if-feature :ccl-1.11)
        (:quail-source-file "mop-pc"   :if-feature :aclpc-linux)
 
        (:quail-source-file "mixin-to-quail")
 
-       (:quail-source-file "function-info-sblx" :if-feature :sbcl-linux)
+       (:quail-source-file "function-info-sblx" :if-feature :sbcl)
        (:quail-source-file "function-info-ccl"  :if-feature :ccl-1.11)
        (:quail-source-file "function-info-pc"   :if-feature :aclpc-linux)))
 
@@ -52,7 +52,7 @@
            (:quail-source-file "search-tree")
            (:quail-source-file "utility"
              :depends-on ("special-vars"))
-           (:quail-source-file "utility-sblx" :if-feature :sbcl-linux)
+           (:quail-source-file "utility-sblx" :if-feature :sbcl)
            (:quail-source-file "utility-ccl" :if-feature :ccl-1.11)
            (:quail-source-file "utility-pc" :if-feature :aclpc-linux)
            (:quail-source-file "seq-utilities")
@@ -62,7 +62,7 @@
            (:quail-source-file "open-mixin")
            (:quail-source-file "return-class")
            (:quail-source-file "make-result")
-           (:quail-source-file "defconstant" :if-feature :sbcl-linux)))
+           (:quail-source-file "defconstant" :if-feature :sbcl)))
 
       (:module "io"
          :pathname "io/"
@@ -70,7 +70,7 @@
            (:quail-source-file "quail-file")
            (:quail-source-file "scan")
            (:quail-source-file "slots")
-           (:quail-source-file "save-sblx" :if-feature :sbcl-linux)
+           (:quail-source-file "save-sblx" :if-feature :sbcl)
            (:quail-source-file "save-ccl" :if-feature :ccl-1.11)
            (:quail-source-file "save-pc" :if-feature :aclpc-linux)
            (:quail-source-file "restore")
@@ -103,8 +103,8 @@
 
       (:module "math"
          :pathname "math/"
-         :components ((:quail-source-file "extended-ops" :if-feature (:not (:or :sbcl-linux :ccl-1.11)))
-           (:quail-source-file "extended-ops-sblx" :if-feature :sbcl-linux)
+         :components ((:quail-source-file "extended-ops" :if-feature (:not (:or :sbcl :ccl-1.11)))
+           (:quail-source-file "extended-ops-sblx" :if-feature :sbcl)
            (:quail-source-file "extended-ops-ccl" :if-feature :ccl-1.11)
            (:quail-source-file "extended-ops-pc" :if-feature :aclpc-linux)
            (:quail-source-file "matrix-multiply")) 
