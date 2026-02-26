@@ -25,19 +25,6 @@
       (setf (cdr (elt copy-list1 (position x list2))) x)))
     (return-from copy-update-list copy-list1)))
 
-;;; The querying function which needs a clim-listener to run
-;;; but isn't used 12JAN2021
-#|
-(defun accepting-tag (item &key (stream *query-io*) (ow t))
-  "item is a cons of two strings"
-    (accepting-values
-  (stream :initially-select-query-identifier 'the-tag :own-window ow)
-      (terpri stream)
-      (terpri stream)
-        (accept 'string :prompt "A string" :stream stream)
-    ))
-|#
-
 ;;; (collect-input (list (cons "a" "a1") (cons "b" "b1") (cons "c" "c1")))
 ;;; click on a -> a11, on b -> b11, on c ; ==>> (("a" . "a11") ("b" . "b11") ("c" ."c1"))
 
@@ -48,7 +35,6 @@
                       (select-text "select")
                       (cancel-text "cancel")
                       (stream *query-io*) (ow t))
-;(declare (ignore columns item-print-function action-function select-text cancel-text))
   (let* ((result-list ()))
            (dolist (x items)
             (accepting-values
