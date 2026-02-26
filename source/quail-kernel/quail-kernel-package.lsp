@@ -16,7 +16,7 @@
 
 #+:CL-2
 (DEFPACKAGE "QUAIL-KERNEL"
-  #+:sbcl-linux (:USE :clim :clim-lisp :clim-extensions) ;"COMMON-LISP")  ; 19 November 2019
+  #+:sbcl (:USE :clim :clim-lisp :clim-extensions) ;"COMMON-LISP")  ; 19 November 2019
   #+:aclpc-linux (:USE :common-lisp)
   (:NICKNAMES "QK" "quail-kernel")
   ;(:SHADOWING-IMPORT-FROM "COMMON-LISP" "ARRAY") ; 19 November 2019 commented out 07JUN2023 to avoid compile complaint?
