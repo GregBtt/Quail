@@ -667,7 +667,7 @@
 
 
 #|
-#+:sbcl-linux(defun ref-print-recursion (r dim current terminus split stream
+#+:sbcl(defun ref-print-recursion (r dim current terminus split stream
                               &rest keys &key (elt-format "~S") (sep " ") (left "(") (right ")"))
  ;(declare (special *print-length*))
   (if (eq split terminus)
