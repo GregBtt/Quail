@@ -27,9 +27,9 @@
 
 (defvar *quail-data-dir-default*)
 ;; this is a CLtL2 logical pathname
-;#-:sbcl-linux
+;#-:sbcl
 (setf *quail-data-dir-default* "Home:Quail Data;")
-;#+:sbcl-linux(setf *quail-data-dir-default* cl-user::*data-dir*)
+;#+:sbcl(setf *quail-data-dir-default* cl-user::*data-dir*)
 
 (defvar *quail-data-dir*)
 (setf *quail-data-dir* nil)
