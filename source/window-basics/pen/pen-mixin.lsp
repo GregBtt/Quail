@@ -59,7 +59,7 @@
  )))
 
 ;;; Here is fix-pen-size, a copy of h-draw:set-pen-size but in :wb
-#+:sbcl-linux(defun fix-pen-size (canvas h &optional v)
+#+:sbcl(defun fix-pen-size (canvas h &optional v)
   ;#-:sbcl(declare (inline h-draw::point-x h-draw::point-y))
   (let* ((its-pane (clim::get-frame-pane canvas 'host-pane)) ;,_ from 'wb::host-pane 09FE21
       (its-line-style (clim:medium-line-style its-pane))
@@ -79,7 +79,7 @@
 ;;;
 
   
-#-:sbcl-linux(defun set-pen-width (canvas width)
+#-:sbcl(defun set-pen-width (canvas width)
   "Set the width of canvas's pen to be width units."
   (unless (and (pen-width-of canvas)
                (= width (pen-width-of canvas)))
@@ -93,7 +93,7 @@
         )))
   )
 
-#+:sbcl-linux(defun set-pen-width (canvas width)
+#+:sbcl(defun set-pen-width (canvas width)
   "Set the width of canvas's pen to be width units."
   (unless (and (pen-width-of canvas)
                (= width (pen-width-of canvas)))
@@ -108,7 +108,7 @@
   )
 
 ;;; Here is fix-pen-color, a copy of h-draw:set-pen-color but here in :wb
-#+:sbcl-linux(defun fix-pen-color (canvas new-color)
+#+:sbcl(defun fix-pen-color (canvas new-color)
   "Sets the drawing color of canvas to (Q)new-color"
   (let ((mp (clim::get-frame-pane canvas 'wb::host-pane)))
     (setf (clim:medium-ink mp)  new-color))) ;; 18DEC2024
@@ -126,8 +126,8 @@
          ((colored-canvas-p canvas)
           (unless (colorp color)
             (setq color (shade-to-color color)))
-          #-:sbcl-linux(h-draw:set-pen-color canvas color)
-          #+:sbcl-linux(fix-pen-color canvas color) ;; copy of h-draw:set-pen-color but in :wb
+          #-:sbcl(h-draw:set-pen-color canvas color)
+          #+:sbcl(fix-pen-color canvas color) ;; copy of h-draw:set-pen-color but in :wb
           )
          (t
           (when (colorp color)
