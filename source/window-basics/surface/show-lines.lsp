@@ -233,7 +233,7 @@
                    x-origin y-origin
                    x y cz szv c ncol aa
                    depth-cue? color-table)
-  #-:sbcl-linux(declare (optimize (speed 3) (safety 0)
+  #-:sbcl(declare (optimize (speed 3) (safety 0)
                      (space 0) (compilation-speed 0))
            )
   (declare (inline canvas-move-to canvas-draw-to + - * / aref))
