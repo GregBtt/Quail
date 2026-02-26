@@ -16,7 +16,7 @@
 
 #+:cl-2
 (defpackage "VIEWS"
-  #+:sbcl-linux (:USE :clim :clim-lisp :clim-extensions) ;"COMMON-LISP")  ; 19 November 2019
+  #+:sbcl (:USE :clim :clim-lisp :clim-extensions) ;"COMMON-LISP")  ; 19 November 2019
   #+:aclpc-linux (:USE :common-lisp)
   (:nicknames "VI" "VW")
   (:SHADOW "DRAW-LINES" "DRAW-ARROW" "SCROLL-BAR" "SLIDER" "CLIM:VIEW") ;;from the CLIM: defintions  19MAR2022  gwb and 22NOV2024 and 03MAR2025
