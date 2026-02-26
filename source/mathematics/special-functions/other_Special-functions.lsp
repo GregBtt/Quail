@@ -76,11 +76,12 @@
 ;;;
 ;;;-------------------------------------------------------------------------------
 
-#-:sbcl-linux(defconstant *table-of-factorials*
+;#-:sbcl
+(defconstant *table-of-factorials*
   (make-array 33 :initial-element 1))
 
-#+:sbcl-linux(qk::define-constant *table-of-factorials*
-  (make-array 33 :initial-element 1))
+;#+:sbcl(qk::define-constant *table-of-factorials*
+;  (make-array 33 :initial-element 1))
 
 (defun fact (n &key (integer-arithmetic nil)
                  (max-for-integers 32))
@@ -106,11 +107,12 @@
 ;;;-------------------------------------------------------------------------------
 
 
-#-:sbcl-linux(defconstant *table-of-log-factorials*
+;#-:sbcl
+(defconstant *table-of-log-factorials*
   (make-array 100 :initial-element -1))
 
-#+:sbcl-linux(qk::define-constant *table-of-log-factorials*
-  (make-array 100 :initial-element -1))
+;#+:sbcl(qk::define-constant *table-of-log-factorials*
+;  (make-array 100 :initial-element -1))
 
 (defun log-n! (n)
   "Returns log(n!) Source: Numerical Recipes."
