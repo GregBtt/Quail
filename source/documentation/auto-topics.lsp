@@ -30,7 +30,7 @@
               (pathname-name pn)
               pn)))
         
-(defun files-in-quail ()
+#-:sbcl-liunx(defun files-in-quail ()
   (loop for system in cl-user::*quail-systems* ;*quail-systems* ; 30JUL2023
         append
         (let ((files (files-in-system system)))
@@ -38,6 +38,16 @@
                 collect (list (rest (pathname-directory fs))
                               (pathname-name fs)
                               fs)))))
+
+#+:sbcl-liunx(defun files-in-quail ()
+  (loop for system in clim-user::*quail-systems* ;*quail-systems* ; 30JUL2023
+        append
+        (let ((files (files-in-system system)))
+          (loop for fs in files
+                collect (list (rest (pathname-directory fs))
+                              (pathname-name fs)
+                              fs)))))
+
 
 (defun find-exported-syms (file-info)
   (let
