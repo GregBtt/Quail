@@ -60,8 +60,8 @@
 #+(and (or :aclpc-linux :aclpc-mac :aclpc-mswin) :allegro)(pushnew :aclpc *features*)
 
 
-#+(and :sbcl :unix) (pushnew :sbcl-linux *features*)
-#+(or :ccl-2 :aclunix :cltl2 :aclpc :sbcl-linux :ccl-1.11)(pushnew :cl-2 *features*)
+;#+(and :sbcl :unix) (pushnew :sbcl-linux *features*)
+#+(or :ccl-2 :aclunix :cltl2 :aclpc :sbcl :ccl-1.11)(pushnew :cl-2 *features*)
 ; add a feature to determine when (declare ..) will/will not be compiled - sbcl was the genesis of this
 #+:sbcl(pushnew :use-decl *features*)
 ; add a feature to determine when (declaim ..) will/will not be compiled - sbcl again
@@ -86,11 +86,11 @@
 ;;;
 
 #+(and :cl-2 :aclpc-linux) (in-package :cl-user)
-#+(and :cl-2 :sbcl-linux) (in-package :clim-user)
+#+(and :cl-2 :sbcl) (in-package :clim-user)
 #-:cl-2(in-package "USER")
 
-;;; Increase sb-ext:inline-expansion-limit* from 50 t0 100
-;(setf sb-ext:*inline-expansion-limit* 100)
+;;; Increase sb-ext:inline-expansion-limit* from 50 (default)
+;(setf sb-ext:*inline-expansion-limit* 200)
 
 ;;;   start with the directory from which quail-make.lsp (this file) was loaded:
 #+:cl-2(defvar *quail-make-load-directory* (make-pathname :directory
@@ -107,7 +107,7 @@
           do (setf string-qmld (concatenate 'string string-qmld dir "/")))
     (setf string-qmld (concatenate 'string string-qmld "**/*.*"))
      (cond ((probe-file location)
-      #+(or :sbcl-linux :aclpc-linux :ccl)
+      #+(or :sbcl :aclpc-linux :ccl)
       (setf location
           (list (append (list "**;*.*.*")
                        (list string-qmld)                       
@@ -300,6 +300,10 @@
 (let ((asdf-extension-file (merge-pathnames "make/quail-asdf-files.lsp" *quail-make-load-directory*)))
   (load asdf-extension-file))
 
+;;; Load the unlocking macro - now in q-k
+;(let ((quail-locking-file (merge-pathnames "make/quail-locks.lsp" *quail-make-load-directory*)))
+;  (load quail-locking-file))
+
 ;;;  Do the make
 (format t "~%Starting the make")
 (format t "~%Current package is ~s " *package*)
@@ -321,6 +325,7 @@
   )    
       (format t "~% ~s loaded" system)
     )
-(format t "~% Quail loaded")    
+(format t "~% Quail loaded")
+    
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; End of File ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
