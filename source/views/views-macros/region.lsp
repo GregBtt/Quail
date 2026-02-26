@@ -231,7 +231,7 @@
           minimize (left-of r) into left
           finally (return (make-region left right  bottom top) )))
 
-#-:sbcl-linux(eval-when (:compile-toplevel :load-toplevel :execute) (proclaim '(inline bottom-left-of bottom-right-of top-left-of
+#-:sbcl(eval-when (:compile-toplevel :load-toplevel :execute) (proclaim '(inline bottom-left-of bottom-right-of top-left-of
             top-right-of  centre-of coerce-bounds-to-integer distance-from)))
 #+:use-dclm(declaim (sb-ext:maybe-inline bottom-left-of)) ;25NOV2024
 (defun bottom-left-of (region)
@@ -348,7 +348,7 @@
   (apply-transform (make-transform-for-regions from-region to-region)
                    self))
 
-#-:sbcl-linux(eval-when (:compile-toplevel :load-toplevel :execute) (proclaim '(inline radius-of)))
+#-:sbcl(eval-when (:compile-toplevel :load-toplevel :execute) (proclaim '(inline radius-of)))
 #+:use-dclm(declaim (sb-ext:maybe-inline radius-of)) ;25NOV2024
 (defun radius-of (region)
   ;;;  returns min of width and height times .5
@@ -507,7 +507,7 @@
 ;;;=================================================================
 
 
-#-:sbcl-linux(eval-when (:compile-toplevel :load-toplevel :execute) 
+#-:sbcl(eval-when (:compile-toplevel :load-toplevel :execute) 
   (proclaim '(inline wb-region wb-position view-region view-position)))
 
 #+:use-dclm(declaim (sb-ext:maybe-inline wb-region)) ;25NOV2024
@@ -626,7 +626,7 @@
   (copy-seq r))
     
 
-#-:sbcl-linux(eval-when (:compile-toplevel :load-toplevel :execute) 
+#-:sbcl(eval-when (:compile-toplevel :load-toplevel :execute) 
   (proclaim '(inline line-segment-intersectp)))
 #+:use-dclm(declaim (sb-ext:maybe-inline line-segment-intersectp)) ;25NOV2024
 (defun line-segment-intersectp(x1 y1 x2 y2 u1  v1 u2 v2)
