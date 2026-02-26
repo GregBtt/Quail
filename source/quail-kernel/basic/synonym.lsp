@@ -86,13 +86,15 @@
 ;;;
 ;;;-------------------------------------------------------------------------------
 
-#+:aclpc-linux (excl:without-package-locks
-  (make-synonym :old expt :new ** :warn nil))
-#+:sbcl-linux (sb-ext:without-package-locks
-  (make-synonym :old expt :new ** :warn nil))
+;#+:aclpc-linux (excl:without-package-locks
+;  (make-synonym :old expt :new ** :warn nil))
+;#+:sbcl (sb-ext:without-package-locks
+;  (make-synonym :old expt :new ** :warn nil))
 
-#-(or :aclpc-linux :sbcl-linux) (make-synonym :old expt :new ** :warn nil)
+;#-(or :aclpc-linux :sbcl) (make-synonym :old expt :new ** :warn nil)
+;;; New macro do deal with all 3 of the above
 
-(make-synonym :old expt :new ^ :warn nil)
+(with-unlocked-packages
+  (make-synonym :old expt :new ^ :warn nil))
 
 
