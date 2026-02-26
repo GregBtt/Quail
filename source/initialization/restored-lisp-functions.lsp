@@ -20,7 +20,7 @@
 ;;; Top-level functions to be restored first.
 ;;;
 
-#+:sbcl-linux(add-restore-lisp-functions  ;#'setup-system-top-level-loop-variable
+#+:sbcl(add-restore-lisp-functions  ;#'setup-system-top-level-loop-variable
                              ;#'setup-legal-top-level-loop-functions
                              ;#'setup-legal-quail-loop
                              #'qk::find-quail
@@ -31,7 +31,7 @@
                             ;; #'qk::quail-release-print
                             )
 
-#-:sbcl-linux(add-restore-lisp-functions  #'setup-system-top-level-loop-variable
+#-:sbcl(add-restore-lisp-functions  #'setup-system-top-level-loop-variable
                              #'setup-legal-top-level-loop-functions
                              #'setup-legal-quail-loop
                              #'qk::find-quail
