@@ -28,7 +28,6 @@
   "Draws or erases colored fixed width lines"
   ;(declare (optimize (speed 3) (safety 0)
   ;                          (space 0) (compilation-speed 0)))
-  (declare (type fixnum width))
   (let ((mp (clim:get-frame-pane canvas 'host-pane)))
     (with-drawing-options (mp :ink color :line-thickness width)
                           (loop 
@@ -51,7 +50,6 @@
   ;(declare 
   ;         (optimize (speed 3) (safety 0)
   ;                   (space 0) (compilation-speed 0)))
-  (declare (type fixnum width))
   (let* ((mp (clim:get-frame-pane canvas 'host-pane))
          (mpbg (medium-background (clim:get-frame-pane canvas 'host-pane))))
     (loop 
@@ -75,15 +73,15 @@
   "Moves colored fixed width lines"
   ;(declare (optimize (speed 3) (safety 0)
   ;                          (space 0) (compilation-speed 0)))
-  (declare (type fixnum width))
   (xor-move-fw-lines canvas old-coords new-coords :width width :color color))
 ;;;
 (defun draw-multi-color-lines (canvas coords &key (width 1) color invisible? 
                                       erase? &allow-other-keys)
   "Draws or erases lines with varying color."
+  (declare (ignorable invisible?))
   ;(declare (optimize (speed 3) (safety 0)
   ;                          (space 0) (compilation-speed 0)))
-  (declare (type fixnum width) (ignorable invisible?))
+  ;(declare (type fixnum width) (ignorable invisible?))
   (let* ((mp (clim:get-frame-pane canvas 'host-pane))
          (mpbg (medium-background (clim:get-frame-pane canvas 'host-pane))))
     (loop 
@@ -107,10 +105,11 @@
                                           invisible? &allow-other-keys )
   "Moves lines with varying color.  ~
   Results with color background are undefined."
+  (declare (ignorable invisible?))
   ;(declare 
   ;         (optimize (speed 3) (safety 0)
   ;                   (space 0) (compilation-speed 0)))
-  (declare (type fixnum width) (ignorable invisible?))
+  ;(declare (type fixnum width) (ignorable invisible?))
   (let* ((mp (clim:get-frame-pane canvas 'host-pane))
          (mpbg (medium-background (clim:get-frame-pane canvas 'host-pane))))
     (loop 
@@ -132,11 +131,12 @@
                                       &key (width 1)
                                       color rgb-color? &allow-other-keys )
   "Moves lines with varying color."
+  (declare (ignorable rgb-color?))
   ;(declare 
   ;         (optimize (speed 3) (safety 0)
   ;                   (space 0) (compilation-speed 0)))
-  (declare (type fixnum width) 
-           (ignore rgb-color?))
+  ;(declare (type fixnum width) 
+  ;         (ignore rgb-color?))
   (let* ((mp (clim:get-frame-pane canvas 'host-pane))
          (mpbg (medium-background (clim:get-frame-pane canvas 'host-pane))))
     (loop 
@@ -159,7 +159,6 @@
   "Draws or erases lines with varying color and width."
   ;(declare (optimize (speed 3) (safety 0)
   ;                          (space 0) (compilation-speed 0)))
-  (declare (type fixnum width)
   (declare (ignorable invisible?))
   (let ((mp (clim:get-frame-pane canvas 'host-pane))
         (mpbg (medium-background (clim:get-frame-pane canvas 'host-pane))))
@@ -177,7 +176,7 @@
           )
       )
     )
-  ))
+  )
 
 ;;;
 ;;; Thers is no xor so regular code
@@ -188,7 +187,6 @@
   ;(declare 
   ;         (optimize (speed 3) (safety 0)
   ;                   (space 0) (compilation-speed 0)))
-  (declare (type fixnum width))
   (let* ((mp (clim:get-frame-pane  canvas 'host-pane))
          (mpbg (medium-background (clim:get-frame-pane canvas 'host-pane))))
     (loop
@@ -213,7 +211,6 @@
   "Moves lines with varying color and width"
   ;(declare (optimize (speed 3) (safety 0)
   ;                          (space 0) (compilation-speed 0)))
-  (declare (type fixnum width))
   (declare (ignorable rgb-color?))
   (xor-move-multi-color-&-width-lines canvas old-coords new-coords :width width
                                       :color color))
@@ -228,7 +225,6 @@
   "Draws or erases lines "
   ;(declare (optimize (speed 3) (safety 0)
   ;                          (space 0) (compilation-speed 0)))
-  (declare (type fixnum width))
   (if (and  color (listp color))
       (if (and width (listp width))
           (draw-multi-color-&-width-lines canvas coords :width width :color color :erase? erase?
@@ -251,7 +247,6 @@
   (declare ;(optimize (speed 3) (safety 0)
            ;                 (space 0) (compilation-speed 0))
                             (inline canvas-draw-lines))
-  (declare (type fixnum width))
   (canvas-draw-lines canvas coords :width width :color color :erase? t))
 
 ;;;
@@ -262,7 +257,6 @@
   "Moves lines "
   ;(declare (optimize (speed 3) (safety 0)
   ;                          (space 0) (compilation-speed 0)))
-  (declare (type fixnum width))
   (if (and  color (listp color))
       (if (and width (listp width))
           (move-multi-color-&-width-lines canvas old-coords new-coords
@@ -288,7 +282,6 @@
   ;(declare 
   ;         (optimize (speed 3) (safety 0)
   ;                   (space 0) (compilation-speed 0)))
-  (declare (type fixnum width))
   (when axes
     ;(let* ((mp (get-frame-pane canvas 'host-pane))
     ;  (mpbg (medium-background (get-frame-pane canvas 'host-pane))))
@@ -306,7 +299,6 @@
   (declare ;(optimize (speed 3) (safety 0)
            ;                 (space 0) (compilation-speed 0))
                              (inline canvas-draw-axes))
-  (declare (type fixnum width))
   (canvas-draw-axes canvas axes :width width :color color :erase? t))
 
 ;;;
@@ -318,7 +310,6 @@
   "Moves axes "
   ;(declare (optimize (speed 3) (safety 0)
   ;                          (space 0) (compilation-speed 0)))
-  (declare (type fixnum width))
   (when old-axes
     (let* ((mp (clim:get-frame-pane canvas 'host-pane))
            (mpbg (medium-background (clim:get-frame-pane canvas 'host-pane))))
