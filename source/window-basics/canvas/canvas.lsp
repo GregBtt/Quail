@@ -41,7 +41,7 @@
                   canvas-redisplay-mixin
                   host-window
                   font-mixin
-                  #+:sbcl-linux sheet
+                  #+:sbcl sheet
                   )
 
   ()
