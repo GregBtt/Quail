@@ -12,7 +12,7 @@
 ;;;     Greg Anglin 1989, 1990, 1991.
 ;;;     R.W. Oldford 1989 +
 ;;;     Bob White
-;;;     Greg Bennett 2017
+;;;     Greg Bennett 2017, 2026
 ;;;
 ;;;
 ;;;----------------------------------------------------------------------------
@@ -20,7 +20,11 @@
 
 (asdf:defsystem "quail" ;; since that is where quail-package.lsp is! 
                                     ;; There is now a quail directory within source.
-    :default-component-class cl-source-file.lsp
-    :components ((:file "quail/quail-package")
+                                    :serial t
+                                    :components
+                                    ((module "quail"
+                                        :pathname "quail/"
+                                        :components ((:quail-source-file "quail-package")
     	         ;(:file "force-to-pathname") ;; this is in test-documentation-path.lsp
-    ))
+                 ))
+                                    ))
