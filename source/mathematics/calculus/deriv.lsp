@@ -108,7 +108,6 @@
     result))
 
 (defmethod-multi deriv ((function (symbol number list)) &key wrt)
-                 (declare (type (or list values function &optional) function)) ;02may2025
   (setf function (simplify function))
   (labels
     (
