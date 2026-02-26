@@ -132,10 +132,11 @@
 ;;; Had to ensure that the class was finalized before calling
 ;;;
 ;;; Added for the benefit of ACL6.0 for right-button problem
- (excl:without-package-locks
-  (defmethod clos::finalize-inheritance
-  ((thing T))
- ))
+ ;(excl:without-package-locks
+ (without-package-locks
+   (defmethod clos::finalize-inheritance
+     ((thing T))
+     ))
 ;; re-type the following two defmethods - cause acl10.1express to crash on loading the compiled code with them in
 #|
  (excl:without-package-locks
