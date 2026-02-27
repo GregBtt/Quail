@@ -373,7 +373,7 @@
 (defun comp-color (canvas)
   "Takes the complement of the current rgb-color triple of stream - returns this new triple"
   (let*     ((mp (clim-user::get-frame-pane canvas 'wb::host-pane))
-             (current (clim-user::background-ink mp))
+             (current (clim-user::medium-ink mp))
              (its-rgb  (mapcar #'(lambda (x) (truncate x)) 
                                (mapcar #'(lambda (y) (* 255 y)) (multiple-value-list (clim-user::color-rgb current)))))
              (new_red (/ (- 255 (first its-rgb)) 255))
