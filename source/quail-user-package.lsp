@@ -16,13 +16,9 @@
 
 #+:cl-2
 (defpackage "QUAIL-USER" 
-  #+:sbcl (:use :clim-lisp :clim :clim-extensions)
-  #+:aclpc-linux (:use :common-lisp)
+  #+:sbcl (:use :quail :clim-lisp :clim :clim-extensions)
+  #+:aclpc-linux (:use :quail :common-lisp)
   ;(:use "QUAIL" "COMMON-LISP")
-  (:IMPORT-FROM "QUAIL-KERNEL"
-                 "<-"  ;28JUN2020
-                 "CGLUE" ;03AUG2023
-                 "REF") ;03AUG2023
   (:IMPORT-FROM "VIEWS"
                  "DATASET") ;28JUN2020
   (:SHADOWING-IMPORT-FROM "QUAIL"
