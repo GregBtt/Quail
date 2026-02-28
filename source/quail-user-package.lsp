@@ -19,6 +19,7 @@
   #+:sbcl (:use :quail :clim-lisp :clim :clim-extensions)
   #+:aclpc-linux (:use :quail :common-lisp)
   ;(:use "QUAIL" "COMMON-LISP")
+  (:shadow "clim:draw-lines" "clim:slider" "clim:scroll-bar")
   (:IMPORT-FROM "VIEWS"
                  "DATASET") ;28JUN2020
   (:SHADOWING-IMPORT-FROM "QUAIL"
