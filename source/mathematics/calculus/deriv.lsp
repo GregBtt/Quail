@@ -446,7 +446,9 @@
                     (deriv (lambda-contents function) :wrt wrt)))
       
       ((functionp function)
-       (list 'function (deriv (second function) :wrt wrt)))
+       (quail-error "functionp clause not valid" function)
+       ;(list 'function (deriv (second function) :wrt wrt))
+       )
       
       ((fn-list-p function) 
        (make-fn (lambda-arglist function)
