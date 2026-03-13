@@ -256,16 +256,16 @@
       (rotate-brush self :viewport viewport))
     ))
 
-
-(defmethod get-brush-menu-items ((self  brushable-view-mixin))
-  
-  '(("Brush" nil "" :sub-items
-    (
-    
-    ("Shape Brush"  (reshape-brush :viewport) )
-    ("Angle Brush"  (reangle-brush :viewport) )
-    
-    )) ("-" nil)))
+;;; To brush.lsp to follow the new defgeneric 005MAR2026 GWB
+;(defmethod get-brush-menu-items ((self  brushable-view-mixin))
+;  
+;  '(("Brush" nil "" :sub-items
+;    (
+;    
+;    ("Shape Brush"  (reshape-brush :viewport) )
+;    ("Angle Brush"  (reangle-brush :viewport) )
+;    
+;    )) ("-" nil)))
 
 
 ;; this version allows brush to be angled
