@@ -3,7 +3,7 @@
 ;;; COPYRIGHT, 1991, STATISTICAL COMPUTING LABORATORY, UNIVERSITY OF WATERLOO
 
 (DEFPACKAGE "NEW-MATH"
-  #+:sbcl-linux (:USE :clim :clim-lisp :clim-extensions) ;"COMMON-LISP") ;19November 2019
+  #+:sbcl (:USE :clim :clim-lisp :clim-extensions) ;"COMMON-LISP") ;19November 2019
   #+:aclpc-linix (:USE :common-lisp)
   (:SHADOWING-IMPORT-FROM "QUAIL-KERNEL"
                           "ARRAY-ELEMENT-TYPE"
