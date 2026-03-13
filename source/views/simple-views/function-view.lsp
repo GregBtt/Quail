@@ -156,12 +156,12 @@
   (if draw? (draw-view self)))
 
 
-
-(defmethod coord-string-y ((self function-view))
-  (let ((f (function-of self))  )
-    (if (or (eql f 'identity) (eql f #'identity))
-      (call-next-method)
-    (princ-to-string (function-string f)))))
+;;; To dview-def/d-view-defs to follow the defgeneric 05mar2026 GWB
+;(defmethod coord-string-y ((self function-view))
+;  (let ((f (function-of self))  )
+;    (if (or (eql f 'identity) (eql f #'identity))
+;      (call-next-method)
+;    (princ-to-string (function-string f)))))
 
 
 
