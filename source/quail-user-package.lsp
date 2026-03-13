@@ -16,12 +16,9 @@
 
 #+:cl-2
 (defpackage "QUAIL-USER" 
-  #+:sbcl (:use :quail :clim-lisp :clim :clim-extensions)
+  #+:sbcl (:use :quail :common-lisp)
   #+:aclpc-linux (:use :quail :common-lisp)
-  ;(:use "QUAIL" "COMMON-LISP")
   #+:sbcl(:shadow "clim:draw-lines" "clim:slider" "clim:scroll-bar")
-  (:IMPORT-FROM "VIEWS"
-                 "DATASET") ;28JUN2020
   (:SHADOWING-IMPORT-FROM "QUAIL"
                           "ARRAY-ELEMENT-TYPE"
                           "ARRAY-RANK"
