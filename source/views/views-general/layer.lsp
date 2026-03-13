@@ -56,6 +56,15 @@
   (:documentation 
    "Places the  selected view on view in viewport "))
 
+;;; From view-ops.lsp so that it follows the defgeneric 05MAR2026 GWB
+(defmethod layer-selected-view ((self view)  &rest arg &key viewport   )
+  
+  (loop for layer in *selected-views*
+        unless (eq layer self)
+        do
+        (deselect-view layer)
+        (apply #'layer-view self layer :viewport viewport arg)))
+
 (defgeneric compute-default-clip-region (view on-view)
   (:documentation "Computes the clip region used~
                    when on-view is layered on top of view"))
