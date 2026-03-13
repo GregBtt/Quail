@@ -174,6 +174,13 @@
 (defgeneric coord-string-y (d-view)
   (:documentation "Returns a string describing y coordinates"))
 
+;;; From simple-views/function-view.lsp  to follow defgeneric 05MAR2026 GWB
+(defmethod coord-string-y ((self function-view))
+  (let ((f (function-of self))  )
+    (if (or (eql f 'identity) (eql f #'identity))
+      (call-next-method)
+    (princ-to-string (function-string f)))))
+
 (defgeneric coord-string-z (d-view)
   (:documentation "Returns a string describing z coordinates"))
 ;;;----------------------------------------------------------------------------------
