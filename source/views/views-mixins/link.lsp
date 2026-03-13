@@ -47,7 +47,7 @@
 (defgeneric fast-link2-views(view1 view2 &key draw? link-table)
   (:documentation "Links the two views. Does not compare the viewed elements "))
 
-
+;;; DUPLICATE - see ~/RESERVE/redefining.lsp
 (defgeneric linkable-view-p(view)
   (:documentation "Is a view linkable?"))
 ;;;----------------------------------------------------------------------------------
