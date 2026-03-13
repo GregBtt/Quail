@@ -263,12 +263,44 @@
 
 (defgeneric print-viewed-object (view))
 
+
 (defgeneric change-bounding-region (view region &key 
                              &allow-other-keys)
    (:documentation "Sets bounding-region of self to region.~
                    and redraws everywhere.~
                    If ignore-x? is non-nil the x bounds view remain unchanged, ~
                    similarly ignore-y?."))
+
+;;; From linkbounds.lsp 05MAR2026
+(defmethod change-bounding-region ((self linkable-bounds-mixin) region 
+                      &key ignore-x? ignore-y? (pretty? t) (draw? t) )
+  "Sets bounding-region of self to region ~
+   and redraws everywhere.
+  If ignore-x? is non-nil the x bounds view remain unchanged.~
+   similarly ignore-y?. ~
+  Views with linked bounds are also modified."
+  
+  (unless (and ignore-x? ignore-y? )
+    (let* ((x-views (link-bounds-x-of self))
+           (y-views (link-bounds-y-of self))
+           (redraw-views nil) )
+      (setq redraw-views (union (unless ignore-x? x-views)
+                                (unless ignore-y? y-views)))
+      (if draw? (loop for v in redraw-views do
+            (erase-view v )))
+      
+      (unless ignore-x?
+        (change-bounding-region-views x-views region 
+                           :ignore-y? t 
+                          :pretty? pretty? :draw? nil))
+      
+      (unless ignore-y?
+        (change-bounding-region-views y-views region 
+                           :ignore-x? t 
+                          :pretty? pretty? :draw? nil))
+      (if draw?
+        (loop for v in redraw-views do
+            (remap-to-viewports v :erase? nil))))))
 
 
 (defgeneric select-view (view)
