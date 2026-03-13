@@ -84,7 +84,7 @@
              (wb:prompt-for-items menu-items
                                   :prompt-text
                                   (if msg msg "Choose dataset")
-                                  :item-function #'first))))
+                                  :item-print-function #'first))))
     
     (unless dataset
       (setq dataset (prompt-for-dataset
@@ -115,11 +115,11 @@
     (if menu-items
       (if (= n 1)
         (loop for res = (cadar (wb:prompt-for-items menu-items :prompt-text msg
-                             :item-function #'first))
+                             :item-print-function #'first))
               until res
               finally (return res))
         (loop for result = (reverse (wb:prompt-for-items menu-items :prompt-text msg
-                                                :item-function #'first
+                                                :item-print-function #'first
                                                 :selection-type :disjoint))
               when result append result into result-list and
            do (setq msg (format nil "Choose ~A  more" (- n (length result-list))))
@@ -146,7 +146,7 @@
   (format *error-output* "~%c-s-v[5] menu-items now are ~s " menu-items)
     (if menu-items
       (loop for res =  (reverse (wb:prompt-for-items menu-items :prompt-text msg
-                                              :item-function #'first
+                                              :item-print-function #'first
                                               :selection-type :disjoint))
              when res append res into result and
              do (setq msg (format nil "Choose ~A  or more" (- n (length result))))
