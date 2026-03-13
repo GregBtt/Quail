@@ -791,13 +791,14 @@
                                     :pretty? t) ))
 
 
-(defmethod layer-selected-view ((self view)  &rest arg &key viewport   )
-  
-  (loop for layer in *selected-views*
-        unless (eq layer self)
-        do
-        (deselect-view layer)
-        (apply #'layer-view self layer :viewport viewport arg)))
+;;; To layer.lsp where if follows the defgeneric 05MAR2026 GWB
+;(defmethod layer-selected-view ((self view)  &rest arg &key viewport   )
+;  
+;  (loop for layer in *selected-views*
+;        unless (eq layer self)
+;        do
+;        (deselect-view layer)
+;        (apply #'layer-view self layer :viewport viewport arg)))
 
 
 (defmethod set-view-font ((self view)  &key name size style 
