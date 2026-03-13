@@ -227,9 +227,8 @@
             for newb = new-region do
             (funcall new-extent v newb))))
 
-
-
-
+;; To views-generics.lsp after defgeneric 05MAR2026 GWB
+#|
 (defmethod change-bounding-region ((self linkable-bounds-mixin) region 
                       &key ignore-x? ignore-y? (pretty? t) (draw? t) )
   "Sets bounding-region of self to region ~
@@ -259,7 +258,7 @@
       (if draw?
         (loop for v in redraw-views do
             (remap-to-viewports v :erase? nil))))))
-
+|#
 
 (defun set-bounding-regions (views region 
                                    &key 
