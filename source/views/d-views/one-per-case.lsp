@@ -40,6 +40,38 @@
 (defgeneric collect-views-in-region (one-per-case-mixin &key viewport region)
   (:documentation "Select  case views in region.~
                   If region is nil, create using mouse. "))
+
+;;; From views-mixins/brush.lsp to foolow the defgeneric 05MAR2026 GWB
+(defmethod collect-views-in-region ((self brushable-view-mixin ) &key viewport region)
+  (let ((brush (brush-of self))
+        (test (brush-test-of self)))
+  (if region
+    (progn
+      (locate-brush brush region)
+      (loop  for sv in (subviews-of self)
+             for vis in (visible-subviews-p self)
+             for vp = (select-viewport sv viewport)
+             when (and vis  (funcall test sv brush vp))
+             collect sv))
+  (let* ((w (window-of viewport))
+         (old-ang (brush-angle brush))
+         (old-wid (brush-width brush))
+         (old-hgt (brush-height brush)))
+    (shape-brush brush *default-brush-width* *default-brush-height*)
+    (reshape-brush  self :viewport viewport)
+   (if (typep brush 'angled-brush)
+     (rotate-brush  self :viewport viewport))
+    
+    (draw-brush brush viewport (wb:mouse-x w) (wb:mouse-y w))
+    (loop  for sv in (subviews-of self)
+           for vis in (visible-subviews-p self)
+           for vp = (select-viewport sv viewport)
+           when (and vis  (funcall test sv brush vp))
+           collect sv
+           finally (draw-brush brush  viewport)
+           (shape-brush brush old-wid old-hgt)
+           (set-brush-angle brush old-ang))))))
+
   
 (defclass justified-line (justification-mixin oriented-line )
   ((middle-menu :allocation :class :initform nil))
