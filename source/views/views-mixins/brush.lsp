@@ -24,7 +24,7 @@
 
 (eval-when (:compile-toplevel :load-toplevel :execute) (export  '(brush  shape-brush default-brush-shape
            draw-brush move-brush
-           brushable-view-mixin  brush-of get-brush-menu-item
+           brushable-view-mixin  brush-of get-brush-menu-items
            toggle-brushing 
            reshape-brush drag-brush)))
 ;;;----------------------------------------------------------------------------------
@@ -102,10 +102,6 @@
   (:documentation "Toggle brushing on-off"))
 
 
-
-
-
-
 (defgeneric reshape-brush (brushable-view-mixin 
                            &key viewport width height)
   (:documentation "Reshape brush on viewport.~
@@ -115,6 +111,10 @@
 
 (defgeneric drag-brush  (brushable-view-mixin  &key viewport width height)   
   (:documentation "Drag brush on viewport"))
+
+;;; NEW 05MAR2026 THERE WAS NOT DEFGENERIC, ONLY METHODS
+(defgeneric get-brush-menu-items (view)
+  (:documentation "Get the menu-items of a brush"))
 
 ;;;----------------------------------------
 
@@ -247,11 +247,11 @@
   (contains-p brush viewport))
   
 
-
-(defmethod get-brush-menu-items ((self brushable-view-mixin))
-  
-  '(("Shape Brush"  (reshape-brush :viewport) ) 
-    ("-" nil)))
+;;; SEE BELOW FOR IMPROVED VERSION
+;(defmethod get-brush-menu-items ((self brushable-view-mixin))
+;  
+;  '(("Shape Brush"  (reshape-brush :viewport) ) 
+;    ("-" nil)))
 
 (defmethod update-menu-items :after ((self brushable-view-mixin) 
                                      (slot-name (eql 'middle-menu)))
@@ -266,6 +266,17 @@
   
   '(("Brush" nil "" :sub-items
     (("BrushMode?" (toggle-brushing))
+    ("Shape Brush"  (reshape-brush :viewport) )
+    ("Angle Brush"  (reangle-brush :viewport) )
+    
+    )) ("-" nil)))
+
+;;; From angled-brush.lsp O5MAR2026 GWB
+(defmethod get-brush-menu-items ((self  brushable-view-mixin))
+  
+  '(("Brush" nil "" :sub-items
+    (
+    
     ("Shape Brush"  (reshape-brush :viewport) )
     ("Angle Brush"  (reangle-brush :viewport) )
     
@@ -331,36 +342,36 @@
 
 
 
-
-(defmethod collect-views-in-region ((self brushable-view-mixin ) &key viewport region)
-  (let ((brush (brush-of self))
-        (test (brush-test-of self)))
-  (if region
-    (progn
-      (locate-brush brush region)
-      (loop  for sv in (subviews-of self)
-             for vis in (visible-subviews-p self)
-             for vp = (select-viewport sv viewport)
-             when (and vis  (funcall test sv brush vp))
-             collect sv))
-  (let* ((w (window-of viewport))
-         (old-ang (brush-angle brush))
-         (old-wid (brush-width brush))
-         (old-hgt (brush-height brush)))
-    (shape-brush brush *default-brush-width* *default-brush-height*)
-    (reshape-brush  self :viewport viewport)
-   (if (typep brush 'angled-brush)
-     (rotate-brush  self :viewport viewport))
-    
-    (draw-brush brush viewport (wb:mouse-x w) (wb:mouse-y w))
-    (loop  for sv in (subviews-of self)
-           for vis in (visible-subviews-p self)
-           for vp = (select-viewport sv viewport)
-           when (and vis  (funcall test sv brush vp))
-           collect sv
-           finally (draw-brush brush  viewport)
-           (shape-brush brush old-wid old-hgt)
-           (set-brush-angle brush old-ang))))))
+;;; To d-views/one-per-case.lsp to follow defgeneric 05MAR2027 GWB
+;(defmethod collect-views-in-region ((self brushable-view-mixin ) &key viewport region)
+;  (let ((brush (brush-of self))
+;        (test (brush-test-of self)))
+;  (if region
+;    (progn
+;      (locate-brush brush region)
+;      (loop  for sv in (subviews-of self)
+;             for vis in (visible-subviews-p self)
+;             for vp = (select-viewport sv viewport)
+;             when (and vis  (funcall test sv brush vp))
+;             collect sv))
+;  (let* ((w (window-of viewport))
+;         (old-ang (brush-angle brush))
+;         (old-wid (brush-width brush))
+;         (old-hgt (brush-height brush)))
+;    (shape-brush brush *default-brush-width* *default-brush-height*)
+;    (reshape-brush  self :viewport viewport)
+;   (if (typep brush 'angled-brush)
+;     (rotate-brush  self :viewport viewport))
+;    
+;    (draw-brush brush viewport (wb:mouse-x w) (wb:mouse-y w))
+;    (loop  for sv in (subviews-of self)
+;           for vis in (visible-subviews-p self)
+;           for vp = (select-viewport sv viewport)
+;           when (and vis  (funcall test sv brush vp))
+;           collect sv
+;           finally (draw-brush brush  viewport)
+;           (shape-brush brush old-wid old-hgt)
+;           (set-brush-angle brush old-ang))))))
 
 
 
