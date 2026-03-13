@@ -165,7 +165,7 @@
             (:both
              (loop
                ;; until mouse button is released
-               (unless (mouse-down-p canvas) (return))
+               (unless (mouse-down-p) (return))
                (unless (equal old-mouse new-mouse)
                  ;; erase rectangle
                  (xlib::draw-rectangle drawable gcontext
@@ -201,7 +201,7 @@
             (:x
              (loop
                ;; until mouse button is released
-               (unless (mouse-down-p canvas) (return))
+               (unless (mouse-down-p) (return))
                (unless (equal old-mouse new-mouse)
                  ;; erase rectangle
                  (xlib::draw-rectangle drawable gcontext
@@ -234,7 +234,7 @@
             (:y
              (loop
                ;; until mouse button is released
-               (unless (mouse-down-p canvas) (return))
+               (unless (mouse-down-p) (return))
                (unless (equal old-mouse new-mouse)
                  ;; erase rectangle
                  (xlib::draw-rectangle drawable gcontext
@@ -267,7 +267,7 @@
             (:none
              (loop
                ;; until mouse button is released
-               (unless (mouse-down-p canvas) (return))
+               (unless (mouse-down-p) (return))
                ;; erase rectangle
                (xlib::draw-rectangle drawable gcontext
                                      left top
@@ -597,7 +597,7 @@
   (declare (special *gray-shade* :boole-xor))
   ;;(format *terminal-io* "~&select-canvas-rect not implemented in X~%")
   ;;(values 0 0 10 10)
-  (loop until (mouse-down-p canvas))
+  (loop until (mouse-down-p)
   (let* ((anchor-point NIL)
          (old-mouse NIL)
          (new-mouse NIL)
@@ -633,7 +633,7 @@
                                 width height
                                 )
           (loop
-            (unless (mouse-down-p canvas) (return))    ;return when the mouse lets up
+            (unless (mouse-down-p) (return))    ;return when the mouse lets up
             (unless (equal old-mouse new-mouse)
               ;; erase rectangle
               (xlib::draw-rectangle drawable gcontext
