@@ -179,8 +179,9 @@
       )))
 |#
 
-
-
+;;; From views-mixins/link.lsp 04MAR2026 gwb
+(defgeneric linkable-view-p(view)
+  (:documentation "Is a view linkable?"))
 
 
 (defun default-right-items ()
