@@ -328,7 +328,7 @@
          (make-link-table :name "Default"))
         
     (t (first (wb:prompt-for-items table-list
-                                     :item-function
+                                     :item-print-function
                                      #'link-table-name-of)))))
 
 (defun choose-link-tables(table-list)
@@ -336,7 +336,7 @@
          table-list)
         (table-list
          (wb:prompt-for-items table-list
-                                     :item-function
+                                     :item-print-function
                                      #'link-table-name-of))
         (t nil)))
     
