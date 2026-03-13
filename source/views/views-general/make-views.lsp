@@ -147,6 +147,9 @@
                             (mapcar #'second (subseq result-list 0 nmax))
                             (mapcar #'second result-list))))))
 
+
+
+
 (make-view-constructor-with-doc 'view 'view )
 (make-view-constructor-with-doc 'point-symbol 'point-symbol )
 (make-view-constructor-with-doc 'box 'point-symbol :symbol :box)
