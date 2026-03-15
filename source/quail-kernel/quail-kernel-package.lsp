@@ -16,10 +16,8 @@
 
 #+:CL-2
 (DEFPACKAGE "QUAIL-KERNEL"
-  #+:sbcl (:USE :clim :clim-lisp :clim-extensions) ;"COMMON-LISP")  ; 19 November 2019
-  #+:aclpc-linux (:USE :common-lisp)
+            (:use :common-lisp)
   (:NICKNAMES "QK" "quail-kernel")
-  ;(:SHADOWING-IMPORT-FROM "COMMON-LISP" "ARRAY") ; 19 November 2019 commented out 07JUN2023 to avoid compile complaint?
   #+:aclpc-linux(:SHADOWING-IMPORT-FROM "ACLMOP" "CLASS-PRECEDENCE-LIST") ; 05 FEB 2020
   #+:aclpc-linux(:SHADOWING-IMPORT-FROM "SYSTEM" "FUNCTION-INFORMATION") ; 05 FEB 2020
   (:SHADOW "ARRAY-ELEMENT-TYPE"
