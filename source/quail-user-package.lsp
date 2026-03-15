@@ -16,8 +16,7 @@
 
 #+:cl-2
 (defpackage "QUAIL-USER" 
-  #+:sbcl (:use :quail :common-lisp)
-  #+:aclpc-linux (:use :quail :common-lisp)
+  (:use :quail :common-lisp)
   #+:sbcl(:shadow "clim:draw-lines" "clim:slider" "clim:scroll-bar")
   (:SHADOWING-IMPORT-FROM "QUAIL"
                           "ARRAY-ELEMENT-TYPE"
