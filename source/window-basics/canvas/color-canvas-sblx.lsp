@@ -57,7 +57,7 @@
                     *white-color*
                     *black-color*)
            (ignorable canvas-class))
-     (let ((frame (make-application-frame 'canvas :pretty-name title;'color-canvas :pretty-name title                                                                
+     (let ((frame (make-application-frame canvas-class :pretty-name title;'color-canvas :pretty-name title                                                                
       :left left
       :bottom (- (screen-height) bottom) 
       :width width 
