@@ -129,7 +129,8 @@
 (defclass constant-documentation (variable-documentation)
   ()
   (:documentation "Documentation for defined constants.  ~
-                   That is those defined with defconstant."))
+                   That is those defined with defconstant,
+                   or define-constant."))
 
 
 
