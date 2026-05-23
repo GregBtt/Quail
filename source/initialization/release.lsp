@@ -23,12 +23,21 @@
 
 ;--------------------------------------------------------------------------------
 
-(defconstant +months+
+#-:use-define-const(defconstant +months+
   '("January" "February" "March" "April" "May" "June" "July" "August" "September"
     "October" "November" "December")
   "A list containing the names of the twelve months of the year.")
 
-(defconstant +days+
+#-:use-define-const(defconstant +days+
+  '("Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "Sunday")
+  "A list containing the days of the week beginning with Monday.")
+
+#+:use-define-const(qk::define-constant +months+
+  '("January" "February" "March" "April" "May" "June" "July" "August" "September"
+    "October" "November" "December")
+  "A list containing the names of the twelve months of the year.")
+
+#+:use-define-const(qk::define-constant +days+
   '("Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "Sunday")
   "A list containing the days of the week beginning with Monday.")
 
