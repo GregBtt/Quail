@@ -15,7 +15,7 @@
 (in-package :wb)
 (eval-when (:compile-toplevel :load-toplevel :execute) (export  '(*pen-operations*)))
 
-(defconstant *pen-operations*
+#+:use-define-const(qk::define-constant *pen-operations*
    (list :boole-1
       :boole-2
       :boole-andc1
