@@ -18,13 +18,13 @@
 
 (in-package :wb)
  
-(defconstant +host-xor-mode+ (boole-to-op :boole-xor))
+#+:use-define-const(qk::define-constant +host-xor-mode+ (boole-to-op :boole-xor))
 
-(defconstant +host-or-mode+ (boole-to-op :boole-1))
+#+:use-define-const(qk::define-constant +host-or-mode+ (boole-to-op :boole-1))
 
-(defconstant +host-bic-mode+ (boole-to-op :boole-1))
+#+:use-define-const(qk::define-constant +host-bic-mode+ (boole-to-op :boole-1))
 
-(defconstant +host-copy-mode+ (boole-to-op :boole-1))
+#+:use-define-const(qk::define-constant +host-copy-mode+ (boole-to-op :boole-1))
 
 (defmacro fast-draw-box (canvas x y size fill?)
   ;(let ((s2 (gensym)) (lx (gensym)) (ly (gensym)) (mp (gensym)))
@@ -283,10 +283,10 @@
   )
 ;;; draw/erase star
 ;;; draw , but first
-(defconstant +cos-18+ (cos (* pi 0.1))) ;10MAY2024 to comply with convention about naming constants with + not *
-(defconstant +cos-54+ (cos (* pi 0.3)))
-(defconstant +sin-18+ (sin (* pi 0.1)))
-(defconstant +sin-54+ (sin (* pi 0.3)))
+#+:use-define-const(qk::define-constant +cos-18+ (cos (* pi 0.1))) ;10MAY2024 to comply with convention about naming constants with + not *
+#+:use-define-const(qk::define-constant +cos-54+ (cos (* pi 0.3)))
+#+:use-define-const(qk::define-constant +sin-18+ (sin (* pi 0.1)))
+#+:use-define-const(qk::define-constant +sin-54+ (sin (* pi 0.3)))
 #|
 (defmacro fast-draw-star (canvas x y  s fill? )
    (declare (ignore fill?) (optimize (speed 3) (safety 0)
