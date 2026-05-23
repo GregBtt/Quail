@@ -66,6 +66,8 @@
 #+:sbcl(pushnew :use-decl *features*)
 ; add a feature to determine when (declaim ..) will/will not be compiled - sbcl again
 #+:sbcl(pushnew :use-dclm *features*)
+; add a feature to determine when to use (define-constant ..) for sbcl see manual 2.3.4
+#+:sbcl(pushnew :use-define-const *features*)
 (format t "Running  ~s "(or #+:linux (format nil "LINUX") #+:windows (format nil "WINDOWS")))
 (format t "~%Using ~s version ~s  "
   (format nil (lisp-implementation-type))
@@ -126,8 +128,10 @@
 
 (pushnew :quail *features*)
 
-(defun path-quail()
-  "q:")
+
+;;; Load the definiton of path-quail
+(let ((quail-path-file (merge-pathnames "make/quail-path-file.lsp" *quail-make-load-directory*)))
+  (load quail-path-file))
 
 ;;;  With Quail located, "q:" is a logical-directory that
 ;;;  now refers to the Quail directory in Common Lisp,
