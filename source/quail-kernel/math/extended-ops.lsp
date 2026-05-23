@@ -41,11 +41,11 @@
 ;------------------------------------------------------------------------------
 
 
-(defconstant  +infinity   '+infinity  "Represents positive infinity.")
-(defconstant   infinity   '+infinity  "Represents positive infinity.")
-(defconstant  -infinity   '-infinity  "Represents negative infinity.")
+#-:use-define-const(defconstant  +infinity   '+infinity  "Represents positive infinity.")
+#-:use-define-const(defconstant   infinity   '+infinity  "Represents positive infinity.")
+#-:use-define-const(defconstant  -infinity   '-infinity  "Represents negative infinity.")
 
-(defconstant NaN 'NaN "Not a number.")
+#-:use-define-const(defconstant NaN 'NaN "Not a number.")
 
 (defvar *zero-over-zero*  NaN
   "The value used when zero is divided by zero.~
