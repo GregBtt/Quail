@@ -28,74 +28,73 @@
 
 ;;; The Semi-standard characters of CL
 
-(defconstant +backspace-event+ #\backspace ;*backspace-event* #\backspace 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +backspace-event+ #\backspace ;*backspace-event* #\backspace 23FEB2022 gwb
  "Captures the backspace keyboard event")
 
-(defconstant +space-event+ #\space ;*space-event* #\space 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +space-event+ #\space ;*space-event* #\space 23FEB2022 gwb
  "Captures the space keyboard event")
 
-(defconstant +tab-event+ #\tab ;*tab-event* #\tab 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +tab-event+ #\tab ;*tab-event* #\tab 23FEB2022 gwb
  "Captures the tab keyboard event")
 
-(defconstant +linefeed-event+ #\return ;*linefeed-event*  #\Newline ;#\return 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +linefeed-event+ #\return ;*linefeed-event*  #\Newline ;#\return 23FEB2022 gwb
   "Captures the linefeed keyboard event")
  
-(defconstant +page-event+ #\page ;*page-event* #\page ;cg::vk-pagedown 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +page-event+ #\page ;*page-event* #\page ;cg::vk-pagedown 23FEB2022 gwb
   "Captures the page keyboard event")
  
-(defconstant +return-key-event+ #\Return ;*return-key-event*  #\Return ;#\newline 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +return-key-event+ #\Return ;*return-key-event*  #\Return ;#\newline 23FEB2022 gwb
  "Captures the return keyboard event")
  
-(defconstant +rubout-event+ #\Rubout ;*rubout-event* #\Rubout 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +rubout-event+ #\Rubout ;*rubout-event* #\Rubout 23FEB2022 gwb
   "Captures the rubout keyboard event")
  
 ;;; Some non-standard and hence non-portable characters.
 
-(defconstant +delete-event+ #\backspace ;*delete-event*  #\backspace 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +delete-event+ #\backspace ;*delete-event*  #\backspace 23FEB2022 gwb
  "Captures the delete keyboard event")
  
-(defconstant +enter-key-event+ #\esc ;*enter-key-event* #\esc 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +enter-key-event+ #\esc ;*enter-key-event* #\esc 23FEB2022 gwb
  "Captures the enter keyboard event")
  
-(defconstant +escape-key-event+ #\Esc ;*escape-key-event* #\Esc 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +escape-key-event+ #\Esc ;*escape-key-event* #\Esc 23FEB2022 gwb
  "Captures the escape key keyboard event")
  
-(defconstant +home-key-event+ :home ;*home-key-event* :home  23FEB2022 gwb
+#+:use-define-const(qk::define-constant +home-key-event+ :home ;*home-key-event* :home  23FEB2022 gwb
  "Captures the home keyboard event")
  
 ;;; The (again non-standard) arrow movement keys.
 
-(defconstant +up-arrow-event+ :up ;*up-arrow-event* :up  23FEB2022 gwb
+#+:use-define-const(qk::define-constant +up-arrow-event+ :up ;*up-arrow-event* :up  23FEB2022 gwb
  "Captures the up arrow keyboard event")
  
-(defconstant +down-arrow-event+ :down ;*down-arrow-event* :down 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +down-arrow-event+ :down ;*down-arrow-event* :down 23FEB2022 gwb
  "Captures the down arrow keyboard event")
  
-(defconstant +back-arrow-event+ :left ;*back-arrow-event* :left 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +back-arrow-event+ :left ;*back-arrow-event* :left 23FEB2022 gwb
  "Captures the back arrow keyboard event")
  
-(defconstant +forward-arrow-event+ :right ;*forward-arrow-event* :right 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +forward-arrow-event+ :right ;*forward-arrow-event* :right 23FEB2022 gwb
  "Captures the forward arrow keyboard event")
  
 ;;; And not some which Unix and Apple may not have
 ;;; One of the pageup / pagedown may correpsond to page
 ;;; The rest remain to be checked
 
-(defconstant +end-event+ :end ;*end-event* :end 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +end-event+ :end ;*end-event* :end 23FEB2022 gwb
  "Captures the end keyboard event")
  
-(defconstant +pageup-event+ :prior ;*pageup-event* :prior  23FEB2022 gwb
+#+:use-define-const(qk::define-constant +pageup-event+ :prior ;*pageup-event* :prior  23FEB2022 gwb
  "Captures the page up keyboard event")
  
-(defconstant +pagedown-event+ :next ;*pagedown-event* :next 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +pagedown-event+ :next ;*pagedown-event* :next 23FEB2022 gwb
  "Captures the pagedown keyboard event")
  
-(defconstant +insert-event+ :insert ;*insert-event* :insert 23FEB2022 gwb
+#+:use-define-const(qk::define-constant +insert-event+ :insert ;*insert-event* :insert 23FEB2022 gwb
  "Captures the insert keyboard event")
  
-(defconstant +cancel-event+ #\Can ;*cancel-event* #\Can  23FEB2022 gwb
+#+:use-define-const(qk::define-constant +cancel-event+ #\Can ;*cancel-event* #\Can  23FEB2022 gwb
  "Captures the cancel keyboard event")
-
 
 ;(defconstant *backtab-event* cg::vk-backtab 
 ; "Captures the backtab keyboard event")
